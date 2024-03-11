@@ -1,6 +1,22 @@
+from django.contrib.auth.base_user import BaseUserManager
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('The Email field must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        return self.create_user(email, password, **extra_fields)
 class CustomUser(AbstractUser):
     first_name = models.CharField(max_length=60, verbose_name='Имя')
     last_name = models.CharField(max_length=120, verbose_name='Фамилия')
@@ -9,6 +25,12 @@ class CustomUser(AbstractUser):
     email = models.CharField(max_length=120, verbose_name='E-mail', unique=True)
     password = models.CharField(max_length=60, verbose_name='Пароль')
     sub = models.BooleanField(default=False, verbose_name='Подписка')
+    username = None
+    objects = CustomUserManager()
+
+    USERNAME_FIELD = 'email'
+    EMAIL_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
     def __str__(self):
         return f"{self.last_name} {self.first_name}"
@@ -71,8 +93,8 @@ class AnimalCard(models.Model):
         ordering = ['name']
 
 class Like(models.Model):
-    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE, verbose_name='Пользователь')
-    animal = models.ForeignKey(AnimalCard,to_field='id',on_delete=models.CASCADE, verbose_name='Карточка животного')
+    animal_who = models.ForeignKey(AnimalCard,on_delete=models.CASCADE, verbose_name="Кто лайкнул")
+    animal_whom = models.ForeignKey(AnimalCard,related_name='animal_to_animal',on_delete=models.CASCADE, verbose_name='Кого лайкнули')
 
     class Meta:
         verbose_name="Лайк"
@@ -115,8 +137,9 @@ class Calendar(models.Model):
         verbose_name_plural="Календарь"
 
 class AdviceCard(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Заголовок')
     kind = models.ForeignKey(KindOfAnimal,on_delete=models.CASCADE, verbose_name='Вид животного')
-    breed = models.ForeignKey(Breed,on_delete=models.CASCADE, verbose_name='Порода',null=True)
+    breed = models.ForeignKey(Breed,on_delete=models.CASCADE, verbose_name='Порода',null=True,blank=True)
     color = models.CharField(max_length=60, verbose_name='Окрас',null=True,blank=True)
     gender = models.BooleanField(default=False,verbose_name='Пол',null=True)
     lower_age = models.IntegerField(verbose_name='Нижний диапазон',null=True,blank=True)
@@ -130,3 +153,12 @@ class AdviceCard(models.Model):
         verbose_name="Карточка советов"
         verbose_name_plural="Карточка советов"
         ordering=['kind','content']
+
+class Favorites(models.Model):
+    pet = models.ForeignKey(AnimalCard,on_delete=models.CASCADE, verbose_name='Питомец')
+    advice = models.ForeignKey(AdviceCard,on_delete=models.CASCADE, verbose_name='Совет')
+
+    class Meta:
+        verbose_name="Избранный совет"
+        verbose_name_plural="Избранные советы"
+        ordering = ['pet']
