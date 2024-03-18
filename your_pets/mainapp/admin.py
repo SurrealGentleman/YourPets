@@ -7,6 +7,7 @@ class CustomUserAdmin(admin.ModelAdmin):
     list_display_links = ('first_name','last_name','email')
     list_filter = ('sub',)
     list_editable =('sub',)
+    readonly_fields = ('password',)
 admin.site.register(CustomUser,CustomUserAdmin)
 
 
@@ -23,6 +24,7 @@ admin.site.register(KindOfAnimal,KindOfAnimalAdmin)
 class BreedAdmin(admin.ModelAdmin):
     list_display = ('name','kind')
     list_display_links = ('name','kind')
+    list_filter = ('kind',)
 admin.site.register(Breed,BreedAdmin)
 class AnimalCardAdmin(admin.ModelAdmin):
     list_display = ('owner', 'name','breed','birth','gender','color','search','mission')
@@ -56,3 +58,9 @@ class LikeAdmin(admin.ModelAdmin):
     list_display_links = ('animal_who',)
     list_filter = ('animal_who',)
 admin.site.register(Like,LikeAdmin)
+
+class GenderAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    list_display_links = ('name',)
+    list_filter = ('name',)
+admin.site.register(Gender,GenderAdmin)
