@@ -23,7 +23,7 @@ class CustomUser(AbstractUser):
     #geolocation =
     connect = models.CharField(max_length=160, verbose_name='Контактные данные')
     email = models.CharField(max_length=120, verbose_name='E-mail', unique=True)
-    password = models.CharField(max_length=60, verbose_name='Пароль')
+    password = models.CharField(max_length=200, verbose_name='Пароль')
     sub = models.BooleanField(default=False, verbose_name='Подписка')
     username = None
     objects = CustomUserManager()
@@ -71,18 +71,30 @@ class Breed(models.Model):
         verbose_name="Порода животного"
         verbose_name_plural="Породы животного"
 
+class Gender(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Наименование')
+
+    class Meta:
+        verbose_name="Пол"
+        verbose_name_plural="Пол"
+        ordering = ['name']
+
+    def __str__(self):
+        return f"{self.name}"
+
 class AnimalCard(models.Model):
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Хозяин')
     name = models.CharField(max_length=60, verbose_name='Кличка')
+    kind = models.ForeignKey(KindOfAnimal,on_delete=models.CASCADE, verbose_name='Вид животного')
     breed = models.ForeignKey(Breed,on_delete=models.CASCADE, verbose_name='Порода')
     birth = models.DateField(verbose_name='Дата рождения')
-    gender = models.BooleanField(default=False, verbose_name='Пол')
+    gender = models.ForeignKey(Gender,on_delete=models.CASCADE, verbose_name='Пол')
     color = models.CharField(max_length=60, verbose_name='Окрас')
     search = models.BooleanField(default=False, verbose_name='Поиск')
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE, verbose_name='Цель')
     # geolocation =
     photo = models.ImageField(upload_to="images/pets/",verbose_name='Фото')
-    comment = models.CharField(max_length=100, null = False, blank = False)
+    comment = models.CharField(max_length=100, null = False, blank = False,verbose_name='Комментарий')
 
     def __str__(self):
         return f"{self.name}"
@@ -112,7 +124,7 @@ class Reviews(models.Model):
         verbose_name_plural="Отзывы"
 
 class Event(models.Model):
-    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE, verbose_name='Пользователь', null=True)
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE, verbose_name='Пользователь', null=True, blank=True)
     name = models.CharField(max_length=100, verbose_name='Наименование события',unique=True)
     color = models.CharField(verbose_name='Цвет', unique=True,max_length=30)
 
@@ -127,7 +139,7 @@ class Calendar(models.Model):
     event = models.ForeignKey(Event,on_delete=models.CASCADE, verbose_name='Событие')
     date = models.DateTimeField(verbose_name='Дата')
     pet = models.ForeignKey(AnimalCard,on_delete=models.CASCADE, verbose_name='Питомец')
-    comment = models.CharField(max_length=100, verbose_name='Комментарий')
+    comment = models.CharField(max_length=100, verbose_name='Комментарий',null=True, blank=True)
 
     def __str__(self):
         return f"{self.event}"
@@ -141,7 +153,7 @@ class AdviceCard(models.Model):
     kind = models.ForeignKey(KindOfAnimal,on_delete=models.CASCADE, verbose_name='Вид животного')
     breed = models.ForeignKey(Breed,on_delete=models.CASCADE, verbose_name='Порода',null=True,blank=True)
     color = models.CharField(max_length=60, verbose_name='Окрас',null=True,blank=True)
-    gender = models.BooleanField(default=False,verbose_name='Пол',null=True)
+    gender = models.ForeignKey(Gender,on_delete=models.CASCADE, verbose_name='Пол',null=True,blank=True)
     lower_age = models.IntegerField(verbose_name='Нижний диапазон',null=True,blank=True)
     upper_age = models.IntegerField(verbose_name='Верхний диапазон',null=True,blank=True)
     content = models.CharField(max_length=230, verbose_name='Содержание')
@@ -162,3 +174,4 @@ class Favorites(models.Model):
         verbose_name="Избранный совет"
         verbose_name_plural="Избранные советы"
         ordering = ['pet']
+
