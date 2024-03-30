@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title%}Your Pets{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static 'image\icon.png' %}" />
+    <link rel="stylesheet" href="{% static 'css\style.css' %}" />
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'image\Logo.png' %}" alt="Logo">
+            </a>
+        </div>
+        <div class="button">
+            <button>Войти</button>
+        </div>
+    </header>
+        <main>
+            {% block main%}
+                <p class="slogan">Начните свое путешествие по миру дружбы и заботы о домашних животных прямо сейчас!</p>
+                <img class = "photo_pets" src="{% static 'image\pets.png'%}" alt="Pets photo">
+                <img class = "photo_feet" src="{% static 'image\feet2.png'%}" alt="Pets feet">
+                <ul>
+                    <li><img src="{% static 'image\advice.png'%}" alt="Icon advice">Индивидуальные советы от ветеринаров</li>
+                    <li><img src="{% static 'image\Search.png'%}" alt="Icon search">Поиск компании для вашего питомца</li>
+                    <li><img src="{% static 'image\calendar.png'%}" alt="Icon calendar">Календарь событий</li>
+                </ul>
+            {% endblock %}
+        </main>
+        <footer>
+            <div class="info">&copy;2024 Your Pets. Все права защищены</div>
+            <div class="link"></div>
+        </footer>
+</body>
+</html>
