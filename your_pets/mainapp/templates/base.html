@@ -59,5 +59,67 @@
             <div class="info">&copy;2024 Your Pets. Все права защищены</div>
             <div class="link"></div>
         </footer>
-</body>
-</html>
+<body>
+<!-- {% for f in form %}
+    {{ f }}
+{% endfor %} -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+    $('#id_kind').on('change', function() {
+        var kindId = $(this).val();
+        if (kindId) {
+            $.ajax({
+                url: '/get_breeds/',  // URL, по которому обрабатывается асинхронный запрос на получение пород
+                type: 'GET',
+                data: {
+                    'kind_id': kindId
+                },
+                success: function(data) {
+                    $('#id_breed').empty();
+                    if (data.length > 0) {
+                        $.each(data, function(index, breed) {
+                            $('#id_breed').append('<option value="' + breed.id + '">' + breed.name + '</option>');
+                        });
+                    } else {
+                        $('#id_breed').append('<option value="">Нет доступных пород</option>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Ошибка при получении пород');
+                }
+            });
+        } else {
+            $('#id_breed').empty();
+        }
+    });
+
+    $('#id_pets').on('change', function() {
+        var petId = $(this).val();
+        if (petId == 'add-pet_button') {
+            $.ajax({
+                url: '/get_breeds/',  // URL, по которому обрабатывается асинхронный запрос на получение пород
+                type: 'GET',
+                data: {
+                    'kind_id': kindId
+                },
+                success: function(data) {
+                    $('#id_breed').empty();
+                    if (data.length > 0) {
+                        $.each(data, function(index, breed) {
+                            $('#id_breed').append('<option value="' + breed.id + '">' + breed.name + '</option>');
+                        });
+                    } else {
+                        $('#id_breed').append('<option value="">Нет доступных пород</option>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Ошибка при получении пород');
+                }
+            });
+        } else {
+            $('#id_breed').empty();
+        }
+    });
+});
+</script>
