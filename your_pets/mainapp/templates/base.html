@@ -6,8 +6,11 @@
     <title>{% block title%}Your Pets{% endblock %}</title>
     <link rel="shortcut icon" href="{% static 'image\icon.png' %}" />
     <link rel="stylesheet" href="{% static 'css\style.css' %}" />
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="{% static 'js\open_popup.js'%}"></script>
 </head>
 <body>
+
     <header>
         <div class="logo">
             <a href="{% url 'home' %}">
@@ -15,7 +18,7 @@
             </a>
         </div>
         <div class="button">
-            <button>Войти</button>
+            <button><a href="#" class="open_popup">Войти</a></button>
         </div>
     </header>
         <main>
@@ -28,6 +31,29 @@
                     <li><img src="{% static 'image\Search.png'%}" alt="Icon search">Поиск компании для вашего питомца</li>
                     <li><img src="{% static 'image\calendar.png'%}" alt="Icon calendar">Календарь событий</li>
                 </ul>
+                <div class="popUp-bg">
+                    <div class="popUp">
+                        <p>Вход/Регистрация</p>
+                        <form action="">
+                            <label>Фамилия: </label><br/>
+                            <input type="text" name="secondname"><br/>
+                            <label>Имя: </label><br/>
+                            <input type="text" name="firstname"><br/>
+                            <label>E-mail: </label><br/>
+                            <input type="email" name="email"><br/>
+                            <label>Контактные данные: </label><br/>
+                            <input type="text" name="contact"><br/>
+                            <label>Пароль: </label><br/>
+                            <input type="password" name="password"><br/>
+                            <label>Повтор пароля: </label><br/>
+                            <input type="password" name="password2"><br/>
+                            <div class="flex-reg">
+                               <input value="Зарегистрироваться" type="submit">
+                            </div>
+
+                     </form>
+                    </div>
+                </div>
             {% endblock %}
         </main>
         <footer>
