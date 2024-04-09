@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        {{form}}
+        {{ form.non_field_errors }}
+        <button type="submit">редактировать</button>
+    </form>
+<br>
+<br>
+<br>
+<br>
+<br>
+    <p>
+        My Pets
+    </p>
+{{select_pets}}
+
+
+    <form method="POST" enctype='multipart/form-data' action="{% url 'add_pet' %}">
+        {% csrf_token %}
+        <div id="form-container"></div>
+        {{ form.non_field_errors }}
+
+    </form>
+
+
+</body>
+</html>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#id_pets').on('change', function() {
+            var petId = $(this).val();
+            if (petId == 'add-pet_button') {
+                $.ajax({
+                    url: '/add_pet/',  // URL, по которому обрабатывается асинхронный запрос на получение пород
+                    type: 'GET',
+                    success: function(response) {
+                        $('#form-container').html(response.form_html);
+                    },
+                    error: function(xhr, errmsg, err) {
+                        console.log(xhr.status + ": " + xhr.responseText);
+                    }
+                });
+            }
+            else if (petId == ''){
+                $('#form-container').html('');
+            }
+        });
+    });
+</script>
