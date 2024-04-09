@@ -14,5 +14,4 @@ urlpatterns = [
 
     # path('', add_card, name='home'),
     path('get_pet_info/', get_pet_info, name='get_pet_info'),
-
 ]

@@ -1,15 +1,69 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>base</title>
+    <title>{% block title%}Your Pets{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static 'image\icon.png' %}" />
+    <link rel="stylesheet" href="{% static 'css\style.css' %}" />
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="{% static 'js\open_popup.js'%}"></script>
 </head>
 <body>
-{% for f in form %}
+
+    <header>
+        <div class="logo">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'image\Logo.png' %}" alt="Logo">
+            </a>
+        </div>
+        <div class="button">
+            <button><a href="#" class="open_popup">Войти</a></button>
+        </div>
+    </header>
+        <main>
+            {% block main%}
+                <p class="slogan">Начните свое путешествие по миру дружбы и заботы о домашних животных прямо сейчас!</p>
+                <img class = "photo_pets" src="{% static 'image\pets.png'%}" alt="Pets photo">
+                <img class = "photo_feet" src="{% static 'image\feet2.png'%}" alt="Pets feet">
+                <ul>
+                    <li><img src="{% static 'image\advice.png'%}" alt="Icon advice">Индивидуальные советы от ветеринаров</li>
+                    <li><img src="{% static 'image\Search.png'%}" alt="Icon search">Поиск компании для вашего питомца</li>
+                    <li><img src="{% static 'image\calendar.png'%}" alt="Icon calendar">Календарь событий</li>
+                </ul>
+                <div class="popUp-bg">
+                    <div class="popUp">
+                        <p>Вход/Регистрация</p>
+                        <form action="">
+                            <label>Фамилия: </label><br/>
+                            <input type="text" name="secondname"><br/>
+                            <label>Имя: </label><br/>
+                            <input type="text" name="firstname"><br/>
+                            <label>E-mail: </label><br/>
+                            <input type="email" name="email"><br/>
+                            <label>Контактные данные: </label><br/>
+                            <input type="text" name="contact"><br/>
+                            <label>Пароль: </label><br/>
+                            <input type="password" name="password"><br/>
+                            <label>Повтор пароля: </label><br/>
+                            <input type="password" name="password2"><br/>
+                            <div class="flex-reg">
+                               <input value="Зарегистрироваться" type="submit">
+                            </div>
+
+                     </form>
+                    </div>
+                </div>
+            {% endblock %}
+        </main>
+        <footer>
+            <div class="info">&copy;2024 Your Pets. Все права защищены</div>
+            <div class="link"></div>
+        </footer>
+<body>
+<!-- {% for f in form %}
     {{ f }}
-{% endfor %}
-</body>
-</html>
+{% endfor %} -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
