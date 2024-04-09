@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>main page</title>
+</head>
+<body>
+    {% if not request.user.is_authenticated %}
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            {{forms.form_login}}
+            {{ form.non_field_errors }}
+            <button type="submit">Войти</button>
+        </form>
+        <form method="POST" action="{% url 'registration' %}">
+            {% csrf_token %}
+            {{forms.form_register}}
+            {{ form.non_field_errors }}
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+    {% else %}
+        <a href="">Профиль</a>
+        <a href="{% url 'logout' %}">Выйти</a>
+    {% endif %}
+</body>
+</html>
