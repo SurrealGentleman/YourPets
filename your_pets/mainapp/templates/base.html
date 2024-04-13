@@ -4,122 +4,134 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title%}Your Pets{% endblock %}</title>
-    <link rel="shortcut icon" href="{% static 'image\icon.png' %}" />
-    <link rel="stylesheet" href="{% static 'css\style.css' %}" />
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <script src="{% static 'js\open_popup.js'%}"></script>
+    <link rel="shortcut icon" href="{% static 'image\icon.png' %}" />
+    <link rel="stylesheet" href="{% static 'css\style_base.css' %}" />
+    {% block src%}
+        <script src="{% static 'js\open_popup.js'%}"></script>
+        <script src="{% static 'js\form_display_none.js'%}"></script>
+    {% endblock %}
 </head>
 <body>
-
     <header>
         <div class="logo">
-            <a href="{% url 'home' %}">
+            <a href="{% url 'main_page' %}">
                 <img src="{% static 'image\Logo.png' %}" alt="Logo">
             </a>
         </div>
-        <div class="button">
-            <button><a href="#" class="open_popup">Войти</a></button>
+        <div class="buttons">
+            {% if not request.user.is_authenticated %}
+                <button><a href="#" class="open_popup">Войти</a></button>
+            {% else %}
+                <button><a href="" class="button">Профиль</a></button>
+                <button><a href="{% url 'logout' %}">Выйти</a></button>
+            {% endif %}
         </div>
     </header>
-        <main>
-            {% block main%}
-                <p class="slogan">Начните свое путешествие по миру дружбы и заботы о домашних животных прямо сейчас!</p>
-                <img class = "photo_pets" src="{% static 'image\pets.png'%}" alt="Pets photo">
-                <img class = "photo_feet" src="{% static 'image\feet2.png'%}" alt="Pets feet">
-                <ul>
-                    <li><img src="{% static 'image\advice.png'%}" alt="Icon advice">Индивидуальные советы от ветеринаров</li>
-                    <li><img src="{% static 'image\Search.png'%}" alt="Icon search">Поиск компании для вашего питомца</li>
-                    <li><img src="{% static 'image\calendar.png'%}" alt="Icon calendar">Календарь событий</li>
-                </ul>
-                <div class="popUp-bg">
-                    <div class="popUp">
-                        <p>Вход/Регистрация</p>
-                        <form action="">
-                            <label>Фамилия: </label><br/>
-                            <input type="text" name="secondname"><br/>
-                            <label>Имя: </label><br/>
-                            <input type="text" name="firstname"><br/>
-                            <label>E-mail: </label><br/>
-                            <input type="email" name="email"><br/>
-                            <label>Контактные данные: </label><br/>
-                            <input type="text" name="contact"><br/>
-                            <label>Пароль: </label><br/>
-                            <input type="password" name="password"><br/>
-                            <label>Повтор пароля: </label><br/>
-                            <input type="password" name="password2"><br/>
-                            <div class="flex-reg">
-                               <input value="Зарегистрироваться" type="submit">
-                            </div>
-                     </form>
-                    </div>
+    <main>
+        {% block main%}
+            <p class="slogan">Начните свое путешествие по миру дружбы и заботы о домашних животных прямо сейчас!</p>
+            <img class = "photo_pets" src="{% static 'image\pets.png'%}" alt="Pets photo">
+            <img class = "photo_feet" src="{% static 'image\feet2.png'%}" alt="Pets feet">
+            <ul>
+                <li><img src="{% static 'image\advice.png'%}" alt="Icon advice">Индивидуальные советы от ветеринаров</li>
+                <li><img src="{% static 'image\Search.png'%}" alt="Icon search">Поиск компании для вашего питомца</li>
+                <li><img src="{% static 'image\calendar.png'%}" alt="Icon calendar">Календарь событий</li>
+            </ul>
+            <div class="popUp-bg">
+                <div class="popUp">
+                    <p><button class="login">Вход</button>/<button class="register">Регистрация</button></p>
+                    <form id="form_register" method="POST" action="{% url 'registration' %}" class="display_none">
+                        {% csrf_token %}
+                        {% for item in forms.form_register %}
+                            <label for="{{item.id_for_label}}">{{ item.label }}</label><br/>
+                            {{item}}<br/>
+                            <div class="errors">{{ item.errors }}</div>
+                        {% endfor %}
+                        <div class="flex-reg">
+                           <input value="Зарегистрироваться" type="submit" class="buttons">
+                        </div>
+                    </form>
+                    <form id="form_login" method="POST" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        {% for item in forms.form_login %}
+                            <label for="{{item.id_for_label}}">{{ item.label }}</label><br/>
+                            {{item}}<br/>
+                            <div class="errors">{{ item.errors }}</div>
+                        {% endfor %}
+                        <div class="flex-reg">
+                           <input value="Войти" type="submit">
+                        </div>
+                    </form>
                 </div>
-            {% endblock %}
-        </main>
-        <footer>
-            <div class="info">&copy;2024 Your Pets. Все права защищены</div>
-            <div class="link"></div>
-        </footer>
+            </div>
+        {% endblock %}
+    </main>
+    <footer>
+        <div class="info">&copy;2024 Your Pets. Все права защищены</div>
+        <div class="link"></div>
+    </footer>
 <body>
 <!-- {% for f in form %}
     {{ f }}
 {% endfor %} -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-    $('#id_kind').on('change', function() {
-        var kindId = $(this).val();
-        if (kindId) {
-            $.ajax({
-                url: '/get_breeds/',  // URL, по которому обрабатывается асинхронный запрос на получение пород
-                type: 'GET',
-                data: {
-                    'kind_id': kindId
-                },
-                success: function(data) {
-                    $('#id_breed').empty();
-                    if (data.length > 0) {
-                        $.each(data, function(index, breed) {
-                            $('#id_breed').append('<option value="' + breed.id + '">' + breed.name + '</option>');
-                        });
-                    } else {
-                        $('#id_breed').append('<option value="">Нет доступных пород</option>');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Ошибка при получении пород');
-                }
-            });
-        } else {
-            $('#id_breed').empty();
-        }
-    });
+<!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--<script>-->
+<!--    $(document).ready(function() {-->
+<!--    $('#id_kind').on('change', function() {-->
+<!--        var kindId = $(this).val();-->
+<!--        if (kindId) {-->
+<!--            $.ajax({-->
+<!--                url: '/get_breeds/',  // URL, по которому обрабатывается асинхронный запрос на получение пород-->
+<!--                type: 'GET',-->
+<!--                data: {-->
+<!--                    'kind_id': kindId-->
+<!--                },-->
+<!--                success: function(data) {-->
+<!--                    $('#id_breed').empty();-->
+<!--                    if (data.length > 0) {-->
+<!--                        $.each(data, function(index, breed) {-->
+<!--                            $('#id_breed').append('<option value="' + breed.id + '">' + breed.name + '</option>');-->
+<!--                        });-->
+<!--                    } else {-->
+<!--                        $('#id_breed').append('<option value="">Нет доступных пород</option>');-->
+<!--                    }-->
+<!--                },-->
+<!--                error: function(xhr, status, error) {-->
+<!--                    console.error('Ошибка при получении пород');-->
+<!--                }-->
+<!--            });-->
+<!--        } else {-->
+<!--            $('#id_breed').empty();-->
+<!--        }-->
+<!--    });-->
 
-    $('#id_pets').on('change', function() {
-        var petId = $(this).val();
-        if (petId == 'add-pet_button') {
-            $.ajax({
-                url: '/get_breeds/',  // URL, по которому обрабатывается асинхронный запрос на получение пород
-                type: 'GET',
-                data: {
-                    'kind_id': kindId
-                },
-                success: function(data) {
-                    $('#id_breed').empty();
-                    if (data.length > 0) {
-                        $.each(data, function(index, breed) {
-                            $('#id_breed').append('<option value="' + breed.id + '">' + breed.name + '</option>');
-                        });
-                    } else {
-                        $('#id_breed').append('<option value="">Нет доступных пород</option>');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Ошибка при получении пород');
-                }
-            });
-        } else {
-            $('#id_breed').empty();
-        }
-    });
-});
-</script>
+<!--    $('#id_pets').on('change', function() {-->
+<!--        var petId = $(this).val();-->
+<!--        if (petId == 'add-pet_button') {-->
+<!--            $.ajax({-->
+<!--                url: '/get_breeds/',  // URL, по которому обрабатывается асинхронный запрос на получение пород-->
+<!--                type: 'GET',-->
+<!--                data: {-->
+<!--                    'kind_id': kindId-->
+<!--                },-->
+<!--                success: function(data) {-->
+<!--                    $('#id_breed').empty();-->
+<!--                    if (data.length > 0) {-->
+<!--                        $.each(data, function(index, breed) {-->
+<!--                            $('#id_breed').append('<option value="' + breed.id + '">' + breed.name + '</option>');-->
+<!--                        });-->
+<!--                    } else {-->
+<!--                        $('#id_breed').append('<option value="">Нет доступных пород</option>');-->
+<!--                    }-->
+<!--                },-->
+<!--                error: function(xhr, status, error) {-->
+<!--                    console.error('Ошибка при получении пород');-->
+<!--                }-->
+<!--            });-->
+<!--        } else {-->
+<!--            $('#id_breed').empty();-->
+<!--        }-->
+<!--    });-->
+<!--});-->
+<!--</script>-->

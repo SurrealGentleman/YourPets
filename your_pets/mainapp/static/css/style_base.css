@@ -17,9 +17,14 @@ body{
     font-family: "Comfortaa";
 }
 
+a{
+    text-decoration:none;
+    color: #004524;
+}
+
 header{
     width: 100%;
-    background-color: #17801e57   ;
+    background-color: #17801e57;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -33,18 +38,16 @@ header .logo img{
 header button{
     font-family: "Comfortaa";
     font-size: 12pt;
-    padding: 5px 0;
+    padding: 5px 10px;
     border-radius: 20px;
     color: #004524;
     background-color: white;
     margin-right: 20px;
     border: none;
-    width:80px;
 }
 
-.open_popup{
-    text-decoration:none;
-    color: #004524;
+header .buttons{
+    float: right;
 }
 
 .icon_close{
@@ -53,6 +56,7 @@ header button{
     right: 20px;
     width:25px;
 }
+
 .popUp-bg{
     position: fixed;
     top: 0;
@@ -80,22 +84,38 @@ header button{
     border-radius: 40px;
 }
 
-.popUp p{
-    font-size:16pt;
-    padding: 15px 0 20px 0;
+.popUp button{
+    font-family: "Comfortaa";
+    border: none;
+    background: none;
+    cursor: pointer; /* при наведении курсор становится в форме руки */
+    font-size: 16pt;
+    padding: 10px 0 20px 0;
 }
 
 .popUp form input {
-    margin: 5px 0 10px 0;
+    margin: 5px 0 0 0;
     padding-left:7px;
     height: 30px;
     width: 300px;
-    font-size: 18px;
+    font-size: 10pt;
     border: 1px solid #B0D4B2;
     border-radius: 10px;
 }
 
+.errors{
+    color: red;
+    font-size: 8pt;
+    margin: 3px 0 5px 0;
+    padding-left:7px;
+}
+
+.display_none{
+    display:none;
+}
+
 .popUp form label {
+    font-size:10pt;
     padding-left:7px;
 }
 
@@ -114,13 +134,12 @@ header button{
     height:30px;
     padding: 0 10px;
     width: 220px;
+    margin-bottom: 15px;
+    cursor: pointer; /* при наведении курсор становится в форме руки */
 }
 
 .no-scroll {
     overflow-y: hidden;
-}
-
-main{
 }
 
 main .photo_pets{
@@ -130,7 +149,6 @@ main .photo_pets{
     width:300px;
     display: inline-block;
     margin-top: 100px;
-
 }
 
 main .photo_feet{
@@ -165,8 +183,6 @@ main li img{
     width: 60px;
     margin-right:10px;
 }
-
-
 
 footer{
     background-color: #17801e57;

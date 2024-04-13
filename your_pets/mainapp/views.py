@@ -10,7 +10,7 @@ from .forms import *
 
 
 class MainPageView(ListView):
-    template_name = 'main_page.html'
+    template_name = 'base.html'
     context_object_name = 'forms'
 
     def get_queryset(self):
@@ -26,7 +26,7 @@ class MainPageView(ListView):
 
 class SingInView(LoginView):
     form_class = CustomUserLoginForm
-    template_name = 'main_page.html'
+    template_name = 'base.html'
 
     def get_success_url(self):
         return reverse_lazy('profile')
