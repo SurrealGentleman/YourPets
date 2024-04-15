@@ -41,24 +41,26 @@
             <div class="popUp-bg">
                 <div class="popUp">
                     <p><button class="login">Вход</button>/<button class="register">Регистрация</button></p>
-                    <form id="form_register" method="POST" action="{% url 'registration' %}" class="display_none">
+                    <form id="form_register" method="POST" class="display_none">
                         {% csrf_token %}
-                        {% for item in forms.form_register %}
+                        {% for item in form_register %}
                             <label for="{{item.id_for_label}}">{{ item.label }}</label><br/>
                             {{item}}<br/>
                             <div class="errors">{{ item.errors }}</div>
                         {% endfor %}
+                        <input type="hidden" name="register">
                         <div class="flex-reg">
                            <input value="Зарегистрироваться" type="submit" class="buttons">
                         </div>
                     </form>
-                    <form id="form_login" method="POST" action="{% url 'login' %}">
+                    <form id="form_login" method="POST">
                         {% csrf_token %}
-                        {% for item in forms.form_login %}
+                        {% for item in form_login %}
                             <label for="{{item.id_for_label}}">{{ item.label }}</label><br/>
                             {{item}}<br/>
-                            <div class="errors">{{ item.errors }}</div>
                         {% endfor %}
+                        <div class="errors">{{ item.errors }}</div>
+                        <input type="hidden" name="login">
                         <div class="flex-reg">
                            <input value="Войти" type="submit">
                         </div>
