@@ -14,7 +14,7 @@ class CustomUserCreationForm(UserCreationForm):
     first_name = forms.CharField(label='Имя', widget=forms.TextInput())
     last_name = forms.CharField(label='Фамилия', widget=forms.TextInput())
     email = forms.EmailField(label='Email', widget=forms.EmailInput())
-    connect = forms.CharField(label='Контактные данные', widget=forms.TextInput())
+    connect = forms.CharField(label='Контактные данные', widget=forms.Textarea())
     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput())
     password2 = forms.CharField(label='Подтверждение пароля', widget=forms.PasswordInput())
 
@@ -27,21 +27,13 @@ class CustomUserChangeForm(UserChangeForm):
     first_name = forms.CharField(label='Имя', widget=forms.TextInput())
     last_name = forms.CharField(label='Фамилия', widget=forms.TextInput())
     email = forms.EmailField(label='Email', widget=forms.EmailInput())
-    connect = forms.CharField(label='Контактные данные', widget=forms.TextInput())
-    password = forms.CharField(label='Пароль', required=False, widget=forms.PasswordInput())
-    confirm_password = forms.CharField(label='Подтверждение пароля', required=False, widget=forms.PasswordInput())
+    connect = forms.CharField(label='Контактные данные', widget=forms.Textarea())
+    password = None
+    confirm_password = None
 
     class Meta:
         model = CustomUser
         fields = ('first_name', 'last_name', 'email', 'connect',)
-
-    def clean(self):
-        cleaned_data = super().clean()
-        password = cleaned_data.get("password")
-        confirm_password = cleaned_data.get("confirm_password")
-        if password != confirm_password:
-            raise forms.ValidationError("Пароли не совпадают")
-        return cleaned_data
 
 
 class SelectPets(forms.Form):

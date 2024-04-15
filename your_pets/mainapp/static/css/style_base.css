@@ -93,7 +93,7 @@ header .buttons{
     padding: 10px 0 20px 0;
 }
 
-.popUp form input {
+.popUp form input textarea{
     margin: 5px 0 0 0;
     padding-left:7px;
     height: 30px;
@@ -103,6 +103,11 @@ header .buttons{
     border-radius: 10px;
 }
 
+form textarea{
+    height: 50px;
+    width: 200px;
+    resize:none;
+}
 .errors{
     color: red;
     font-size: 8pt;

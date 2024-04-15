@@ -23,7 +23,7 @@
             {% if not request.user.is_authenticated %}
                 <button><a href="#" class="open_popup">Войти</a></button>
             {% else %}
-                <button><a href="" class="button">Профиль</a></button>
+                <button><a href="{% url 'profile' %}" class="button">Профиль</a></button>
                 <button><a href="{% url 'logout' %}">Выйти</a></button>
             {% endif %}
         </div>

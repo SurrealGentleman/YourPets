@@ -22,7 +22,7 @@
     border-radius: 40px;
 }
 
-.form_profile input, select{
+.form_profile input, select,textarea{
     margin: 5px 0 0 0;
     padding-left:7px;
     height: 25px;
