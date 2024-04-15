@@ -31,7 +31,7 @@ def login_or_register(request):
                 return redirect('profile')
                 # form_register.save()
                 # return redirect('main_page')
-    return render(request, 'main_page.html', {'form_login': form_login, 'form_register': form_register})
+    return render(request, 'base.html', {'form_login': form_login, 'form_register': form_register})
 
 
 def logout_user(request):
