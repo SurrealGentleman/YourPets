@@ -1,58 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Profile</title>
-</head>
-<body>
-    <form method="POST">
-        {% csrf_token %}
-        {{form}}
-        {{ form.non_field_errors }}
-        <button type="submit">редактировать</button>
-    </form>
-<br>
-<br>
-<br>
-<br>
-<br>
-    <p>
-        My Pets
-    </p>
-{{select_pets}}
-
-
-    <form method="POST" enctype='multipart/form-data' action="{% url 'add_pet' %}">
-        {% csrf_token %}
-        <div id="form-container"></div>
-        {{ form.non_field_errors }}
-
-    </form>
-
-
-</body>
-</html>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#id_pets').on('change', function() {
-            var petId = $(this).val();
-            if (petId == 'add-pet_button') {
-                $.ajax({
-                    url: '/add_pet/',  // URL, по которому обрабатывается асинхронный запрос на получение пород
-                    type: 'GET',
-                    success: function(response) {
-                        $('#form-container').html(response.form_html);
-                    },
-                    error: function(xhr, errmsg, err) {
-                        console.log(xhr.status + ": " + xhr.responseText);
-                    }
-                });
-            }
-            else if (petId == ''){
-                $('#form-container').html('');
-            }
-        });
-    });
-</script>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Профиль{% endblock %}
+{% block src %}
+    <link rel="stylesheet" href="{% static 'css\style_profile.css' %}" />
+    <script src="{% static 'js\for_form_add_pet.js' %}"></script>
+{% endblock %}
+{% block main%}
+    <img class = "photo_feet" src="{% static 'image\feet2.png'%}" alt="Pets feet">
+    <div class="flex_block">
+<!--        ДОДЕЛАТЬ КОГДА ЛЕША УБЕРЕТ ПАРОЛЬ!!!!-->
+        <div class="profile_block">
+            <form method="POST" class="form_profile">
+                {% csrf_token %}
+                {% for item in form%}
+                    <label for="{{item.id_for_label}}">{{ item.label }}</label><br/>
+                        {{item}}<br/>
+                    <div class="errors">{{ item.errors }}</div>
+                {% endfor %}
+                <button type="submit" class="button_change">Изменить</button>
+            </form>
+        </div>
+        <div class="user_pets">
+            <p class="slogan">MY PETS</p>
+            {{select_pets}}
+            <form method="POST" enctype='multipart/form-data' action="{% url 'add_pet' %}">
+                {% csrf_token %}
+                <div id="form-container"></div>
+                {{ form.non_field_errors }}
+            </form>
+        </div>
+    </div>
+{% endblock %}

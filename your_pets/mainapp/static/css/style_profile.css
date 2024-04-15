@@ -1,0 +1,47 @@
+.flex_block{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.profile_block{
+    background-color: #CCEACE;
+    height: 490.5px;
+    width: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile_block .form_profile{
+    background-color: white;
+    margin: 0 10px;
+    width: 300px;
+    padding: 20px 40px;
+    font-size: 14pt;
+    border-radius: 40px;
+}
+
+.form_profile input, select,textarea{
+    margin: 5px 0 0 0;
+    padding-left:7px;
+    height: 25px;
+    width: 200px;
+    font-size: 10pt;
+    border: 1px solid #B0D4B2;
+    border-radius: 7px;
+}
+
+.button_change{
+    background: #B0D4B2;
+    color: white;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 150px;
+    height: 20px;
+}
+
+.user_pets{
+    align-self:flex-start;
+}
