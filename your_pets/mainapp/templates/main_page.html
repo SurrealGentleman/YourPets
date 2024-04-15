@@ -6,21 +6,25 @@
 </head>
 <body>
     {% if not request.user.is_authenticated %}
-        <form method="POST" action="{% url 'login' %}">
+        <form method="POST">
             {% csrf_token %}
-            {{forms.form_login}}
-            {{ form.non_field_errors }}
+
+            {% for i in form_login %}
+                {{ i }}
+            {% endfor %}
+                {{form_login.non_field_errors}}
+            <input type="hidden" name="login">
             <button type="submit">Войти</button>
         </form>
-        <form method="POST" action="{% url 'registration' %}">
+        <form method="POST">
             {% csrf_token %}
-            {{forms.form_register}}
-            {{ form.non_field_errors }}
+            {% for i in form_register %}
+                {{ i }}
+                {{ i.errors }}
+            {% endfor %}
+            <input type="hidden" name="register">
             <button type="submit">Зарегистрироваться</button>
         </form>
-    {% else %}
-        <a href="">Профиль</a>
-        <a href="{% url 'logout' %}">Выйти</a>
     {% endif %}
 </body>
 </html>
