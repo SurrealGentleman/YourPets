@@ -17,14 +17,15 @@ body{
     font-family: "Comfortaa";
 }
 
-a{
+header a{
     text-decoration:none;
-    color: #004524;
+    display:inline-block;
+    color: black;
 }
 
 header{
     width: 100%;
-    background-color: #17801e57;
+    background-color: #b0d4b2;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -38,16 +39,37 @@ header .logo img{
 header button{
     font-family: "Comfortaa";
     font-size: 12pt;
+    height:30px;
+    display:inline-grid;
     padding: 5px 10px;
     border-radius: 20px;
     color: #004524;
     background-color: white;
-    margin-right: 20px;
+    margin-left: 10px;
     border: none;
 }
 
+header button img{
+    width:20px;
+}
+
 header .buttons{
+    display:flex;
+    flex-direction: row-reverse;
     float: right;
+    margin-right:20px;
+}
+
+.button_lents_advice{
+    display:inline;
+}
+
+.button_lents_advice button{
+    width: 150px;
+    font-weight:bold;
+    font-size:14pt;
+    float:right;
+
 }
 
 .icon_close{
@@ -93,7 +115,7 @@ header .buttons{
     padding: 10px 0 20px 0;
 }
 
-.popUp form input textarea{
+.popUp form input, textarea{
     margin: 5px 0 0 0;
     padding-left:7px;
     height: 30px;
@@ -105,8 +127,9 @@ header .buttons{
 
 form textarea{
     height: 50px;
-    width: 200px;
     resize:none;
+    font-family: "Comfortaa";
+    padding:5px;
 }
 .errors{
     color: red;
@@ -190,10 +213,9 @@ main li img{
 }
 
 footer{
-    background-color: #17801e57;
+    background-color: #b0d4b2;
     color:white;
     position: absolute;
-	left: 0;
 	bottom: 0;
 	width: 100%;
 	height: 30px;
@@ -205,5 +227,3 @@ footer .info{
     padding-left:15px;
     font-size:10pt;
 }
-
-
