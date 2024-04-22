@@ -22,7 +22,9 @@
         </div>
         <div class="user_pets">
             <p class="slogan">MY PETS</p>
-            {{select_pets}}
+            {% for pet in select_pets %}
+                <img width="100px" src="{{pet.photo.url}}">
+            {% endfor %}
             <form method="POST" enctype='multipart/form-data' action="{% url 'add_pet' %}">
                 {% csrf_token %}
                 <div id="form-container"></div>
