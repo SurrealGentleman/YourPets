@@ -4,32 +4,56 @@
 {% block src %}
     <link rel="stylesheet" href="{% static 'css\style_profile.css' %}" />
     <script src="{% static 'js\for_form_add_pet.js' %}"></script>
+    <script src="{% static 'js\open_popup.js'%}"></script>
 {% endblock %}
 {% block main%}
     <img class = "photo_feet" src="{% static 'image\feet2.png'%}" alt="Pets feet">
     <div class="flex_block">
-<!--        ДОДЕЛАТЬ КОГДА ЛЕША УБЕРЕТ ПАРОЛЬ!!!!-->
         <div class="profile_block">
-            <form method="POST" class="form_profile">
-                {% csrf_token %}
-                {% for item in form%}
-                    <label for="{{item.id_for_label}}">{{ item.label }}</label><br/>
-                        {{item}}<br/>
-                    <div class="errors">{{ item.errors }}</div>
-                {% endfor %}
-                <button type="submit" class="button_change">Изменить</button>
-            </form>
+            <div class="sticky">
+               <img class="photo_user" src="{% static 'image\user.png'%}" alt="Photo user">
+                <form method="POST" class="form_profile">
+                    {% csrf_token %}
+                    <div>
+                        {% for item in form%}
+                            <label for="{{item.id_for_label}}">{{ item.label }}</label><br/>
+                            {{item}}
+                            <div class="errors">{{ item.errors }}</div>
+                        {% endfor %}
+                        <a href="#" class="open_popup change_password">Сменить пароль</a>
+                    </div>
+                    <button type="submit" class="button_change">Изменить</button>
+                </form>
+            </div>
+
         </div>
         <div class="user_pets">
-            <p class="slogan">MY PETS</p>
-            {% for pet in select_pets %}
-                <img width="100px" src="{{pet.photo.url}}">
-            {% endfor %}
+            <p class="slogan">Мои питомцы</p>
+            <div class="choice_pet">
+                {% for pet in select_pets %}
+                    <input class='display_none' type="radio" name="id_pets" id="{{pet.pk}}">
+                    <label>
+                        <img class='round_pets' src="{{pet.photo.url}}">
+                    </label>
+                {% endfor %}
+                <input class='display_none' type="radio" name="id_pets" id="add-pet_button">
+                <label>
+                    <div class="round_pets add">
+                       <img src="{% static 'image\plus.png' %}">
+                    </div>
+                </label>
+            </div>
             <form method="POST" enctype='multipart/form-data' action="{% url 'add_pet' %}">
                 {% csrf_token %}
                 <div id="form-container"></div>
                 {{ form.non_field_errors }}
             </form>
+        </div>
+    </div>
+    <div class="popUp-bg">
+        <div class="popUp">
+            <p>Сменить пароль</p>
+            <p>FORM</p>
         </div>
     </div>
 {% endblock %}

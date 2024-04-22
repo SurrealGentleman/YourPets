@@ -23,8 +23,14 @@
             {% if not request.user.is_authenticated %}
                 <button><a href="#" class="open_popup">Войти</a></button>
             {% else %}
-                <button><a href="{% url 'profile' %}" class="button">Профиль</a></button>
-                <button><a href="{% url 'logout' %}">Выйти</a></button>
+                <button><a href="{% url 'logout' %}"><img src="{% static 'image\exit.png' %}" alt="Exit"></a></button>
+                <button><a href="{% url 'profile' %}"><img src="{% static 'image\profile.png' %}" alt="Profile"></a></button>
+                <div class="button_lents_advice">
+                    <button><a href="#">Советы</a></button>
+                    <button><a href="#">Лента</a></button>
+                </div>
+<!--                <button><a href="#"><img src="{% static 'image\icon_calendar.png' %}" alt="Exit"></a></button>-->
+<!--                <button><a href="#"><img src="{% static 'image\winner.png' %}" alt="Exit"></a></button>-->
             {% endif %}
         </div>
     </header>
