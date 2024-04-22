@@ -58,7 +58,6 @@ class ProfileUpdateView(UpdateView):
         context = super().get_context_data(**kwargs)
         context['select_pets'] = AnimalCard.objects.filter(owner=self.request.user)
         # context['select_pets'] = SelectPets(user=self.request.user)
-
         # context['form_add_Pets'] = AnimalAddForm()
         return context
 
@@ -194,7 +193,57 @@ class AddPetView(CreateView):
 
     def get(self, request, *args, **kwargs):
         form_html = render_to_string('animal_add_form.html', {'form': self.get_form()})
+        # print(form_html)
         return JsonResponse({'form_html': form_html})
+
+
+
+def pet_update(request):
+    print(request.GET.get('pet_id'))
+    data = AnimalCard.objects.get(id=request.GET.get('pet_id'))
+    form = PetChangeForm(instance=data)
+    print(form)
+    form_html = render_to_string('animal_add_form.html', {'form': form})
+    return JsonResponse({'form_html': form_html})
+
+
+
+
+
+
+class PetUpdateView(UpdateView):
+    template_name = 'profile.html'
+    form_class = PetChangeForm
+
+    def get_success_url(self):
+        return reverse_lazy('profile')
+
+    def get_object(self, queryset=None):
+        print(self.request.GET.get('pet_id'))
+        return AnimalCard.objects.get(pk=self.request.GET.get('pet_id'))
+
+    def form_valid(self, form):
+        form.save()
+        return super(PetUpdateView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form_html'] = render_to_string('animal_add_form.html', {'form': self.get_form()})
+        return context
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
