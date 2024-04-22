@@ -43,9 +43,22 @@
                     </div>
                 </label>
             </div>
+<!--             <p class="slogan">MY PETS</p>
+            <br>
+            {% for pet in select_pets %}
+                <img width="100px" src="{{pet.photo.url}}">
+                <input type="radio" name="id_pets" id="{{pet.pk}}">
+            {% endfor %}
+            <input type="radio" name="id_pets" id="add-pet_button" style="display: none;">
+            <label for="add-pet_button">ДОБАВИТЬ</label> -->
             <form method="POST" enctype='multipart/form-data' action="{% url 'add_pet' %}">
                 {% csrf_token %}
                 <div id="form-container"></div>
+                {{ form.non_field_errors }}
+            </form>
+            <form method="POST" enctype='multipart/form-data'>
+                {% csrf_token %}
+                <div id="form-container2"></div>
                 {{ form.non_field_errors }}
             </form>
         </div>

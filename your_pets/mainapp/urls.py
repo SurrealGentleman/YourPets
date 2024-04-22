@@ -14,6 +14,8 @@ urlpatterns = [
 
 
     path('add_pet/', AddPetView.as_view(), name='add_pet'),
+    path('change_pet/', pet_update, name='change_pet'),
+
     path('get_breeds/', get_breeds, name='get_breeds'),
 
     # path('', add_card, name='home'),
