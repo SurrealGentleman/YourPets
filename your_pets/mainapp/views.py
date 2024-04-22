@@ -39,6 +39,28 @@ def logout_user(request):
     return redirect('main_page')
 
 
+class ProfileUpdateView(UpdateView):
+    template_name = 'profile.html'
+    form_class = CustomUserChangeForm
+
+    def get_success_url(self):
+        return reverse_lazy('profile')
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        user.save()
+        return super(ProfileUpdateView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['select_pets'] = AnimalCard.objects.filter(owner=self.request.user)
+        # context['select_pets'] = SelectPets(user=self.request.user)
+
+        # context['form_add_Pets'] = AnimalAddForm()
+        return context
 
 
 
@@ -46,8 +68,31 @@ def logout_user(request):
 
 
 
-
-
+# class ProfileUpdateView(UpdateView):
+#     template_name = 'profile.html'
+#     form_class = CustomUserChangeForm
+#
+#     def get_success_url(self):
+#         return reverse_lazy('profile')
+#
+#     def get_object(self, queryset=None):
+#         return self.request.user
+#
+#     def form_valid(self, form):
+#         user = form.save(commit=False)
+#         password = form.cleaned_data.get("password")
+#         if password:
+#             user.set_password(password)
+#             update_session_auth_hash(self.request, user)  # Сохранение пользователя в текущей сессии
+#         user.save()
+#         return super(ProfileUpdateView, self).form_valid(form)
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['select_pets'] = SelectPets(user=self.request.user)
+#
+#         # context['form_add_Pets'] = AnimalAddForm()
+#         return context
 
 
 
@@ -137,31 +182,7 @@ def logout_user(request):
 
 
 
-class ProfileUpdateView(UpdateView):
-    template_name = 'profile.html'
-    form_class = CustomUserChangeForm
 
-    def get_success_url(self):
-        return reverse_lazy('profile')
-
-    def get_object(self, queryset=None):
-        return self.request.user
-
-    def form_valid(self, form):
-        user = form.save(commit=False)
-        password = form.cleaned_data.get("password")
-        if password:
-            user.set_password(password)
-            update_session_auth_hash(self.request, user)  # Сохранение пользователя в текущей сессии
-        user.save()
-        return super(ProfileUpdateView, self).form_valid(form)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['select_pets'] = SelectPets(user=self.request.user)
-
-        # context['form_add_Pets'] = AnimalAddForm()
-        return context
 
 
 class AddPetView(CreateView):

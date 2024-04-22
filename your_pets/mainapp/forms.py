@@ -36,13 +36,13 @@ class CustomUserChangeForm(UserChangeForm):
         fields = ('first_name', 'last_name', 'email', 'connect',)
 
 
-class SelectPets(forms.Form):
-    def __init__(self, user, *args, **kwargs):
-        super(SelectPets, self).__init__(*args, **kwargs)
-        self.fields['pets'] = forms.ModelChoiceField(queryset=AnimalCard.objects.filter(owner=user),
-                                                     widget=forms.Select(attrs={'class': 'select-with-button'}))
-        self.fields['pets'].widget.choices = (list(self.fields['pets'].widget.choices) +
-                                              [('add-pet_button', 'Добавить питомца')])
+# class SelectPets(forms.Form):
+#     def __init__(self, user, *args, **kwargs):
+#         super(SelectPets, self).__init__(*args, **kwargs)
+#         self.fields['pets'] = forms.ModelChoiceField(queryset=AnimalCard.objects.filter(owner=user),
+#                                                      widget=forms.Select(attrs={'class': 'select-with-button'}))
+#         self.fields['pets'].widget.choices = (list(self.fields['pets'].widget.choices) +
+#                                               [('add-pet_button', 'Добавить питомца')])
 
 
 class AnimalAddForm(forms.Form):
