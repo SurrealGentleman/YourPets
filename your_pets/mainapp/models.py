@@ -3,7 +3,7 @@ import os
 from django.contrib.auth.base_user import BaseUserManager
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_delete
 from django.dispatch import receiver
 
 
@@ -124,6 +124,13 @@ def delete_old_logo(sender, instance, **kwargs):
             if instance.photo != old_instance.photo:
                 if os.path.isfile(old_instance.photo.path):
                     os.remove(old_instance.photo.path)
+
+
+@receiver(post_delete, sender=AnimalCard)
+def delete_image(sender, instance, **kwargs):
+    if hasattr(instance, 'photo') and instance.photo:
+        if os.path.isfile(instance.photo.path):
+            os.remove(instance.photo.path)
 
 
 class Like(models.Model):

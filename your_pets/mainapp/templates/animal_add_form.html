@@ -1,0 +1,28 @@
+{% load static %}
+{% if form_type == 'add' %}
+    {{form}}
+    <button type="submit" name="pet_add">Cоздать</button>
+{% elif form_type == 'update' %}
+    <img class='round_pets' src="{{pet_info.photo.url}}" alt="photo_pet">
+    {{form.photo}}
+
+    <label for="pet_info_name">Имя/Кличка</label>
+    <input type="text" id="pet_info_name" value="{{pet_info.name}}" disabled>
+    <input type="text" id="pet_info_kind" value="{{pet_info.kind}}" disabled>
+    <input type="text" id="pet_info_breed" value="{{pet_info.breed}}" disabled>
+    <input type="text" id="pet_info_birth" value="{{pet_info.birth}}" disabled>
+    <input type="text" id="pet_info_gender" value="{{pet_info.gender}}" disabled>
+    <input type="text" id="pet_info_color" value="{{pet_info.color}}" disabled>
+
+    <label for="{{form.search.id_for_label}}">{{ form.search.label }}</label>
+    {{form.search}}
+    <label for="{{form.mission.id_for_label}}">{{ form.mission.label }}</label>
+    {{form.mission}}
+    <label for="{{form.comment.id_for_label}}">{{ form.comment.label }}</label>
+    {{form.comment}}
+
+    <input type="hidden" name="pet" value="{{pet_info.pk}}">
+    <button type="submit" name="pet_change">Изменить</button>
+    <button type="submit" name="pet_delete">Удалить</button>
+{% endif %}
+<script src="{% static 'js\send_request_getBreeds.js' %}"></script>
