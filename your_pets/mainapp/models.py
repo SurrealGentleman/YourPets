@@ -1,6 +1,10 @@
+import os
+
 from django.contrib.auth.base_user import BaseUserManager
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 
 class CustomUserManager(BaseUserManager):
@@ -110,6 +114,16 @@ class AnimalCard(models.Model):
         verbose_name = "Карточка животного"
         verbose_name_plural = "Карточки животного"
         ordering = ['name']
+
+
+@receiver(pre_save, sender=AnimalCard)
+def delete_old_logo(sender, instance, **kwargs):
+    if instance.pk:
+        old_instance = sender.objects.get(pk=instance.pk)
+        if instance.photo and old_instance.photo:
+            if instance.photo != old_instance.photo:
+                if os.path.isfile(old_instance.photo.path):
+                    os.remove(old_instance.photo.path)
 
 
 class Like(models.Model):

@@ -3,8 +3,9 @@
 {% block title %}Профиль{% endblock %}
 {% block src %}
     <link rel="stylesheet" href="{% static 'css\style_profile.css' %}" />
-    <script src="{% static 'js\for_form_add_pet.js' %}"></script>
+    <script src="{% static 'js\send_request_on_add_update.js' %}"></script>
     <script src="{% static 'js\open_popup.js'%}"></script>
+    <script src="{% static 'js\timeout_redirect.js'%}"></script>
 {% endblock %}
 {% block main%}
     <img class = "photo_feet" src="{% static 'image\feet2.png'%}" alt="Pets feet">
@@ -15,58 +16,54 @@
                 <form method="POST" class="form_profile">
                     {% csrf_token %}
                     <div>
-                        {% for item in form%}
+                        {% for item in form_profile_change %}
                             <label for="{{item.id_for_label}}">{{ item.label }}</label><br/>
                             {{item}}
                             <div class="errors">{{ item.errors }}</div>
                         {% endfor %}
-                        <a href="#" class="open_popup change_password">Сменить пароль</a>
+                        <a href="" class="open_popup change_password" id="change_password">Сменить пароль</a>
+                        <a href="{% url 'delete_user' %}" class="change_password">Удалить</a>
                     </div>
-                    <button type="submit" class="button_change">Изменить</button>
+                    <button type="submit" class="button_change" name="profile_change">Изменить</button>
+                    {% for message in messages %}
+                      <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                    {% endfor %}
                 </form>
             </div>
-
         </div>
         <div class="user_pets">
             <p class="slogan">Мои питомцы</p>
             <div class="choice_pet">
                 {% for pet in select_pets %}
                     <input class='display_none' type="radio" name="id_pets" id="{{pet.pk}}">
-                    <label>
+                    <label for="{{pet.pk}}">
                         <img class='round_pets' src="{{pet.photo.url}}">
                     </label>
                 {% endfor %}
                 <input class='display_none' type="radio" name="id_pets" id="add-pet_button">
-                <label>
+                <label for="add-pet_button">
                     <div class="round_pets add">
                        <img src="{% static 'image\plus.png' %}">
                     </div>
                 </label>
             </div>
-<!--             <p class="slogan">MY PETS</p>
-            <br>
-            {% for pet in select_pets %}
-                <img width="100px" src="{{pet.photo.url}}">
-                <input type="radio" name="id_pets" id="{{pet.pk}}">
-            {% endfor %}
-            <input type="radio" name="id_pets" id="add-pet_button" style="display: none;">
-            <label for="add-pet_button">ДОБАВИТЬ</label> -->
-            <form method="POST" enctype='multipart/form-data' action="{% url 'add_pet' %}">
-                {% csrf_token %}
-                <div id="form-container"></div>
-                {{ form.non_field_errors }}
-            </form>
             <form method="POST" enctype='multipart/form-data'>
                 {% csrf_token %}
-                <div id="form-container2"></div>
-                {{ form.non_field_errors }}
+                <div id="form-container-add_update_pet"></div>
+                {{ form_pet.non_field_errors }}
             </form>
         </div>
     </div>
     <div class="popUp-bg">
         <div class="popUp">
             <p>Сменить пароль</p>
-            <p>FORM</p>
+            <form method="POST">
+                {% csrf_token %}
+                <div>
+                    {{form_password_change.as_p}}
+                </div>
+                <button type="submit" class="button_change" name="password_change">Изменить</button>
+            </form>
         </div>
     </div>
 {% endblock %}
