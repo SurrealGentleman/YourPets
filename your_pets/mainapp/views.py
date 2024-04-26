@@ -1,11 +1,14 @@
+from django.contrib import messages
 from django.contrib.auth import logout, update_session_auth_hash, login
-from django.contrib.auth.views import LoginView
-from django.http import JsonResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.contrib.auth.views import LoginView, PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
 from django.views import View
-from django.views.generic import CreateView, ListView, UpdateView, FormView
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import CreateView, ListView, UpdateView, FormView, DeleteView
 from .forms import *
 
 
@@ -26,11 +29,10 @@ def login_or_register(request):
         elif 'register' in request.POST:
             form_register = CustomUserCreationForm(request.POST)
             if form_register.is_valid():
-                user = form_register.save()
-                login(request, user)
-                return redirect('profile')
-                # form_register.save()
-                # return redirect('main_page')
+                user = form_register.save(commit=False)
+                user.set_password(form_register.cleaned_data['password1'])
+                user.save()
+                return redirect('main_page')
     return render(request, 'base.html', {'form_login': form_login, 'form_register': form_register})
 
 
@@ -39,27 +41,244 @@ def logout_user(request):
     return redirect('main_page')
 
 
-class ProfileUpdateView(UpdateView):
+def profile(request):
+    form_profile_change = CustomUserChangeForm(instance=request.user)
+    form_password_change = PasswordChangeForm(instance=request.user)
+    select_pets = AnimalCard.objects.filter(owner=request.user)
+    form_pet = None
+    if request.method == 'POST':
+        if 'profile_change' in request.POST:
+            form_profile_change = CustomUserChangeForm(request.POST, instance=request.user)
+            if form_profile_change.is_valid():
+                form_profile_change.save()
+                messages.success(request, 'Профиль успешно изменен')
+        elif 'password_change' in request.POST:
+            form_password_change = PasswordChangeForm(request.POST, instance=request.user)
+            if form_password_change.is_valid():
+                form_password_change.save()
+                messages.success(request, 'Пароль успешно изменен')
+        elif 'pet_add' in request.POST:
+            form_pet = AnimalAddForm(request.POST, request.FILES)
+            if form_pet.is_valid():
+                pet = form_pet.save(commit=False)
+                pet.owner = request.user
+                pet.save()
+                messages.success(request, 'Питомец успешно создан')
+        elif 'pet_change' in request.POST:
+            pet = get_object_or_404(AnimalCard, pk=request.POST.get('pet'))
+            form_pet = PetChangeForm(request.POST, request.FILES, instance=pet)
+            if form_pet.is_valid():
+                form_pet.save()
+                messages.success(request, 'Данные о питомце успешно изменены')
+        elif 'pet_delete' in request.POST:
+            AnimalCard.objects.filter(pk=request.POST.get('pet')).delete()
+            messages.success(request, 'Питомец успешно удален')
+
+    context = {
+        'form_profile_change': form_profile_change,
+        'form_password_change': form_password_change,
+        'select_pets': select_pets,
+    }
+    return render(request, 'profile.html', context)
+
+
+def get_form_pet(request):
+    context = dict()
+    form = None
+    if request.GET.get('add_pet'):
+        form = AnimalAddForm()
+        context['form_type'] = 'add'
+    elif request.GET.get('update_pet'):
+        data = AnimalCard.objects.get(id=request.GET.get('pet_id'))
+        form = PetChangeForm(instance=data)
+        context['form_type'] = 'update'
+        context['pet_info'] = data
+    context['form'] = form
+    form_html = render_to_string('animal_add_form.html', context=context)
+    return JsonResponse({'form_html': form_html})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def add_update_pet(request):
+    context = dict()
+    form = None
+    if request.method == 'GET':
+        if request.GET.get('add_pet'):
+            form = AnimalAddForm()
+            context['form_type'] = 'add'
+        elif request.GET.get('update_pet'):
+            data = AnimalCard.objects.get(id=request.GET.get('pet_id'))
+            form = PetChangeForm(instance=data)
+            context['form_type'] = 'update'
+            context['pet_info'] = data
+        context['form'] = form
+        form_html = render_to_string('animal_add_form.html', context=context)
+        return JsonResponse({'form_html': form_html})
+
+    elif request.method == 'POST':
+        if 'pet_add' in request.POST:
+            form_pet = AnimalAddForm(request.POST, request.FILES)
+            if form_pet.is_valid():
+                pet = form_pet.save(commit=False)
+                pet.owner = request.user
+                pet.save()
+                messages.success(request, 'Питомец успешно создан')
+                return redirect('profile')
+        elif 'pet_change' in request.POST:
+            pet = get_object_or_404(AnimalCard, pk=request.POST.get('pet'))
+            form_pet = PetChangeForm(request.POST, request.FILES, instance=pet)
+            if form_pet.is_valid():
+                form_pet.save()
+                messages.success(request, 'Данные о питомце успешно изменены')
+        elif 'pet_delete' in request.POST:
+            AnimalCard.objects.filter(pk=request.POST.get('pet')).delete()
+            messages.success(request, 'Питомец успешно удален')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# class ProfileUpdateView(UpdateView):
+#     template_name = 'profile.html'
+#     form_class = CustomUserChangeForm
+#
+#     def get_success_url(self):
+#         return reverse_lazy('profile')
+#
+#     def get_object(self, queryset=None):
+#         return self.request.user
+#
+#     def form_valid(self, form):
+#         user = form.save(commit=False)
+#         user.save()
+#         return super(ProfileUpdateView, self).form_valid(form)
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['select_pets'] = AnimalCard.objects.filter(owner=self.request.user)
+#         return context
+
+
+def delete_user(request):
+    user = get_object_or_404(CustomUser, pk=request.user.pk)
+    user.delete()
+    logout(request)
+    return redirect('main_page')
+
+
+# class UserPasswordChangeView(SuccessMessageMixin, PasswordChangeView):
+#     """
+#     Изменение пароля пользователя
+#     """
+#     form_class = UserPasswordChangeForm
+#     template_name = 'profile.html'
+#     success_message = 'Ваш пароль был успешно изменён!'
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['title'] = 'Изменение пароля на сайте'
+#         return context
+#
+#     def get_success_url(self):
+#         return reverse_lazy('profile_detail', kwargs={'slug': self.request.user.profile.slug})
+
+# def user_password_change(request):
+#     print(request.method)
+#     if request.method == 'GET':
+#         form = UserPasswordChangeForm(request.user)
+#         print(form)
+#         form_html = render_to_string('password_change_form.html', {'form': form})
+#         print(form_html)
+#         return JsonResponse({'form_html': form_html})
+#     elif request.method == 'POST':
+#         pass
+
+
+
+
+
+
+
+
+
+
+
+class AddPetView(CreateView):
     template_name = 'profile.html'
-    form_class = CustomUserChangeForm
+    form_class = AnimalAddForm
 
     def get_success_url(self):
         return reverse_lazy('profile')
 
-    def get_object(self, queryset=None):
-        return self.request.user
+    def get(self, request, *args, **kwargs):
+        form_html = render_to_string('animal_add_form.html', {'form': self.get_form()})
+        return JsonResponse({'form_html': form_html})
 
-    def form_valid(self, form):
-        user = form.save(commit=False)
-        user.save()
-        return super(ProfileUpdateView, self).form_valid(form)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['select_pets'] = AnimalCard.objects.filter(owner=self.request.user)
-        # context['select_pets'] = SelectPets(user=self.request.user)
-        # context['form_add_Pets'] = AnimalAddForm()
-        return context
+def pet_update(request):
+    print(request.GET.get('pet_id'))
+    data = AnimalCard.objects.get(id=request.GET.get('pet_id'))
+    form = PetChangeForm(instance=data)
+    print(form)
+    form_html = render_to_string('animal_add_form.html', {'form': form})
+    return JsonResponse({'form_html': form_html})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -184,52 +403,36 @@ class ProfileUpdateView(UpdateView):
 
 
 
-class AddPetView(CreateView):
-    form_class = AnimalAddForm
-    template_name = 'profile.html'
-
-    def get_success_url(self):
-        return reverse_lazy('profile')
-
-    def get(self, request, *args, **kwargs):
-        form_html = render_to_string('animal_add_form.html', {'form': self.get_form()})
-        # print(form_html)
-        return JsonResponse({'form_html': form_html})
-
-
-
-def pet_update(request):
-    print(request.GET.get('pet_id'))
-    data = AnimalCard.objects.get(id=request.GET.get('pet_id'))
-    form = PetChangeForm(instance=data)
-    print(form)
-    form_html = render_to_string('animal_add_form.html', {'form': form})
-    return JsonResponse({'form_html': form_html})
 
 
 
 
 
 
-class PetUpdateView(UpdateView):
-    template_name = 'profile.html'
-    form_class = PetChangeForm
 
-    def get_success_url(self):
-        return reverse_lazy('profile')
 
-    def get_object(self, queryset=None):
-        print(self.request.GET.get('pet_id'))
-        return AnimalCard.objects.get(pk=self.request.GET.get('pet_id'))
 
-    def form_valid(self, form):
-        form.save()
-        return super(PetUpdateView, self).form_valid(form)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form_html'] = render_to_string('animal_add_form.html', {'form': self.get_form()})
-        return context
+
+# class PetUpdateView(UpdateView):
+#     template_name = 'profile.html'
+#     form_class = PetChangeForm
+#
+#     def get_success_url(self):
+#         return reverse_lazy('profile')
+#
+#     def get_object(self, queryset=None):
+#         print(self.request.GET.get('pet_id'))
+#         return AnimalCard.objects.get(pk=self.request.GET.get('pet_id'))
+#
+#     def form_valid(self, form):
+#         form.save()
+#         return super(PetUpdateView, self).form_valid(form)
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['form_html'] = render_to_string('animal_add_form.html', {'form': self.get_form()})
+#         return context
 
 
 
@@ -250,24 +453,24 @@ class PetUpdateView(UpdateView):
 
 
 
-def add_card(request):
-    # if request.method == 'POST':
-    #     form = AnimalAddForm(request.POST)
-    #     if form.is_valid():
-    #         pass
-    # else:
-    #     form = AnimalAddForm()
-    if request.user.is_authenticated:
-        if request.method == 'POST':
-            form = SelectPets(request.POST)
-            if form.is_valid():
-                pass
-        else:
-            form = SelectPets(user=request.user)
-    else:
-        form = 'ERROR'
-
-    return render(request, 'base.html', {'form': form})
+# def add_card(request):
+#     # if request.method == 'POST':
+#     #     form = AnimalAddForm(request.POST)
+#     #     if form.is_valid():
+#     #         pass
+#     # else:
+#     #     form = AnimalAddForm()
+#     if request.user.is_authenticated:
+#         if request.method == 'POST':
+#             form = SelectPets(request.POST)
+#             if form.is_valid():
+#                 pass
+#         else:
+#             form = SelectPets(user=request.user)
+#     else:
+#         form = 'ERROR'
+#
+#     return render(request, 'base.html', {'form': form})
 
 
 def get_breeds(request):
@@ -275,7 +478,7 @@ def get_breeds(request):
     breeds = Breed.objects.filter(kind_id=kind_id).values('id', 'name')  # Получаем породы для выбранного вида
     return JsonResponse(list(breeds), safe=False)  # Отправляем данные в формате JSON
 
-def get_pet_info(request):
-    pet_id = request.GET.get('pet_id')
-    breeds = Breed.objects.filter(pet_id=pet_id).values('id', 'name')
-    return JsonResponse(list(breeds), safe=False)
+# def get_pet_info(request):
+#     pet_id = request.GET.get('pet_id')
+#     breeds = Breed.objects.filter(pet_id=pet_id).values('id', 'name')
+#     return JsonResponse(list(breeds), safe=False)

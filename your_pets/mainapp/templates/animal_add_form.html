@@ -1,34 +1,28 @@
-{{form}}
-<button type="submit">создать</button>
-<script>
-    $(document).ready(function() {
-        $('#id_kind').on('change', function() {
-            var kindId = $(this).val();
-            if (kindId) {
-                $.ajax({
-                    url: '/get_breeds/',  // URL, по которому обрабатывается асинхронный запрос на получение пород
-                    type: 'GET',
-                    data: {
-                        'kind_id': kindId
-                    },
-                    success: function(data) {
-                        $('#id_breed').empty();
-                        if (data.length > 0) {
-                            $.each(data, function(index, breed) {
-                                $('#id_breed').append('<option value="' + breed.id + '">' + breed.name + '</option>');
-                            });
-                        } else {
-                            $('#id_breed').append('<option value="">Нет доступных пород</option>');
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Ошибка при получении пород');
-                    }
-                });
-            }
-            else {
-                $('#id_breed').empty();
-            }
-        });
-    });
-</script>
+{% load static %}
+{% if form_type == 'add' %}
+    {{form}}
+    <button type="submit" name="pet_add">Cоздать</button>
+{% elif form_type == 'update' %}
+    <img class='round_pets' src="{{pet_info.photo.url}}" alt="photo_pet">
+    {{form.photo}}
+
+    <label for="pet_info_name">Имя/Кличка</label>
+    <input type="text" id="pet_info_name" value="{{pet_info.name}}" disabled>
+    <input type="text" id="pet_info_kind" value="{{pet_info.kind}}" disabled>
+    <input type="text" id="pet_info_breed" value="{{pet_info.breed}}" disabled>
+    <input type="text" id="pet_info_birth" value="{{pet_info.birth}}" disabled>
+    <input type="text" id="pet_info_gender" value="{{pet_info.gender}}" disabled>
+    <input type="text" id="pet_info_color" value="{{pet_info.color}}" disabled>
+
+    <label for="{{form.search.id_for_label}}">{{ form.search.label }}</label>
+    {{form.search}}
+    <label for="{{form.mission.id_for_label}}">{{ form.mission.label }}</label>
+    {{form.mission}}
+    <label for="{{form.comment.id_for_label}}">{{ form.comment.label }}</label>
+    {{form.comment}}
+
+    <input type="hidden" name="pet" value="{{pet_info.pk}}">
+    <button type="submit" name="pet_change">Изменить</button>
+    <button type="submit" name="pet_delete">Удалить</button>
+{% endif %}
+<script src="{% static 'js\send_request_getBreeds.js' %}"></script>

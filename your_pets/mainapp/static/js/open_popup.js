@@ -3,7 +3,6 @@ $(document).ready(function(){
         e.preventDefault();
         $('html').addClass('no-scroll');
         $('.popUp-bg').fadeIn(500);
-
     });
     $(document).on('click', function(event) {
         if (!$(event.target).closest('.popUp').length && !$(event.target).closest('.open_popup').length) {
