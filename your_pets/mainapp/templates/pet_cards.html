@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+</head>
+<body>
+    Лента<br><br><br><br><br><br><br>
+    <form method="GET">
+        {{form}}
+        <button type="submit">Фильтр</button>
+    </form>
+    <script src="{% static 'js\send_request_getBreeds_by_pet.js' %}"></script>
+    {% for card in cards %}
+        {{card}}
+        {{card.gender}}
+        <form method="POST">
+            {%csrf_token%}
+            <input type="hidden" name="card_id" value="{{card.pk}}">
+            <button type="submit">лайк</button>
+        </form>
+    {% endfor %}
+</body>
+</html>
+<script type="text/javascript">
+    var selectedBreedIds = {{ breed_list|safe }};
+</script>
+

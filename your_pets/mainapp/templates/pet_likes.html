@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+</head>
+<body>
+    Лайки<br><br><br><br><br><br><br>
+    {{form}}
+    <div id="card_likes"></div>
+</body>
+</html>
+
+<script>
+    $(document).ready(function() {
+    $('input[name="pet"]').each(function() {
+        if ($(this).is(':checked')) {
+            var petId = $(this).val();
+            if (petId) {
+                $.ajax({
+                    url: '/get_cards_likes/',
+                    type: 'GET',
+                    data: {
+                        'pet_id': petId
+                    },
+                    success: function(response) {
+                        $('#card_likes').html(response.cards_html);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Ошибка при получении карточек животных');
+                    }
+                });
+            } else {
+                $('#card_likes').empty();
+            }
+        }
+    });
+
+
+    $('input[name="pet"]').on('change', function() {
+        var petId = $(this).val();
+        if (petId) {
+            $.ajax({
+                url: '/get_cards_likes/',
+                type: 'GET',
+                data: {
+                    'pet_id': petId
+                },
+                success: function(response) {
+                    $('#card_likes').html(response.cards_html);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Ошибка при получении карточек животных');
+                }
+            });
+        }
+        else {
+            $('#card_likes').empty();
+        }
+    });
+});
+</script>

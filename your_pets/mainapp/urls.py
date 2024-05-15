@@ -12,7 +12,11 @@ urlpatterns = [
 
     path('get_form/', get_form_pet, name='get_form'),
     path('get_breeds/', get_breeds, name='get_breeds'),
+    path('get_cards_likes/', get_cards_likes, name='get_cards_likes'),
 
+
+    path('pet_cards/', pet_cards, name='pet_cards'),
+    path('pet_cards/likes', likes, name='likes'),
 
     # path('add_update_pet/', add_update_pet, name='add_update_pet'),
     # path('change_password/', user_password_change, name='change_password'),
