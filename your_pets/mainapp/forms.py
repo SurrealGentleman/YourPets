@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import *
+
 from .models import *
 
 
@@ -107,3 +108,46 @@ class PetChangeForm(forms.ModelForm):
     class Meta:
         model = AnimalCard
         fields = ('search', 'mission', 'photo', 'comment')
+
+
+class Filter(forms.ModelForm):
+    pet = forms.ModelChoiceField(queryset=AnimalCard.objects.none(), label='Мои питомцы',
+                                 widget=forms.RadioSelect)
+    mission = forms.ModelMultipleChoiceField(queryset=Mission.objects.all(), label='Цель',
+                                             widget=forms.CheckboxSelectMultiple)
+    gender = forms.ModelMultipleChoiceField(queryset=Gender.objects.all(), label='Пол',
+                                            widget=forms.CheckboxSelectMultiple)
+    breed = forms.ModelMultipleChoiceField(queryset=Breed.objects.none(), label='Порода животного',
+                                           widget=forms.CheckboxSelectMultiple)
+
+    class Meta:
+        model = AnimalCard
+        fields = ['pet', 'mission', 'gender', 'breed']
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+        if self.user:
+            self.fields['pet'].queryset = AnimalCard.objects.filter(owner=self.user, search=True)
+        else:
+            self.fields['pet'].queryset = AnimalCard.objects.none()
+
+
+class ChoicePet(forms.ModelForm):
+    pet = forms.ModelChoiceField(queryset=AnimalCard.objects.none(), label='Мои питомцы',
+                                 widget=forms.RadioSelect)
+    mutual_likes = forms.BooleanField(label='Взаимные лайки', required=False)
+
+    class Meta:
+        model = AnimalCard
+        fields = ['pet']
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+        if self.user:
+            self.fields['pet'].queryset = AnimalCard.objects.filter(owner=self.user, search=True)
+        else:
+            self.fields['pet'].queryset = AnimalCard.objects.none()

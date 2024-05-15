@@ -1,0 +1,7 @@
+{% load static %}
+{% for card in cards %}
+    <img src="{{card.photo.url}}">
+    {{card.name}}
+    {{card.missing}}
+    {{card.gender}}
+{% endfor %}
