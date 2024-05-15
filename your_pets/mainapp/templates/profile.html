@@ -6,30 +6,39 @@
     <script src="{% static 'js\send_request_on_add_update.js' %}"></script>
     <script src="{% static 'js\open_popup.js'%}"></script>
     <script src="{% static 'js\timeout_redirect.js'%}"></script>
+    <script src="{% static 'js\add_photo.js'%}"></script>
+    <script src="{% static 'js\confirm_delete_user.js'%}"></script>
 {% endblock %}
 {% block main%}
-    <img class = "photo_feet" src="{% static 'image\feet2.png'%}" alt="Pets feet">
     <div class="flex_block">
         <div class="profile_block">
-            <div class="sticky">
-               <img class="photo_user" src="{% static 'image\user.png'%}" alt="Photo user">
-                <form method="POST" class="form_profile">
-                    {% csrf_token %}
-                    <div>
-                        {% for item in form_profile_change %}
-                            <label for="{{item.id_for_label}}">{{ item.label }}</label><br/>
-                            {{item}}
-                            <div class="errors">{{ item.errors }}</div>
-                        {% endfor %}
-                        <a href="" class="open_popup change_password" id="change_password">Сменить пароль</a>
-                        <a href="{% url 'delete_user' %}" class="change_password">Удалить</a>
-                    </div>
-                    <button type="submit" class="button_change" name="profile_change">Изменить</button>
-                    {% for message in messages %}
-                      <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+           <img class="photo_user" src="{% static 'image\user2.png'%}" alt="Photo user">
+            <form method="POST" class="form_profile">
+                {% csrf_token %}
+                <div>
+                    {% for item in form_profile_change %}
+                        <label for="{{item.id_for_label}}">{{ item.label }}</label>
+                        {{item}}
+                        <div class="errors">{{ item.errors }}</div>
                     {% endfor %}
-                </form>
-            </div>
+                    <a href="" class="open_popup change_password" id="change_password">Сменить пароль</a>
+                    <a href="#" class="change_password" onclick="return showModal()">Удалить</a>
+                </div>
+                <div class="overlay">
+                   <div id="confirmModal" style="display:none;">
+                       <p>Вы уверены, что хотите продолжить?</p>
+                       <div>
+                           <a id="yesBtn"  href="{% url 'delete_user' %}" ><button class="button_change">Да</button></a>
+                           <button id="noBtn" class="button_change" >Нет</button>
+                       </div>
+                   </div>
+                </div>
+
+                <button type="submit" class="button_change" name="profile_change">Изменить</button>
+                {% for message in messages %}
+                  <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </form>
         </div>
         <div class="user_pets">
             <p class="slogan">Мои питомцы</p>
@@ -56,8 +65,8 @@
     </div>
     <div class="popUp-bg">
         <div class="popUp">
-            <p>Сменить пароль</p>
-            <form method="POST">
+            <p class="name_popup">Сменить пароль</p>
+            <form method="POST" class="password">
                 {% csrf_token %}
                 <div>
                     {{form_password_change.as_p}}

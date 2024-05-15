@@ -13,7 +13,9 @@
     {% endblock %}
 </head>
 <body>
-    <header>
+
+    <div class="container">
+        <header>
         <div class="logo">
             <a href="{% url 'main_page' %}">
                 <img src="{% static 'image\Logo.png' %}" alt="Logo">
@@ -34,50 +36,52 @@
             {% endif %}
         </div>
     </header>
-    <main>
-        {% block main%}
-            <p class="slogan">Начните свое путешествие по миру дружбы и заботы о домашних животных прямо сейчас!</p>
-            <img class = "photo_pets" src="{% static 'image\pets.png'%}" alt="Pets photo">
-            <img class = "photo_feet" src="{% static 'image\feet2.png'%}" alt="Pets feet">
-            <ul>
-                <li><img src="{% static 'image\advice.png'%}" alt="Icon advice">Индивидуальные советы от ветеринаров</li>
-                <li><img src="{% static 'image\Search.png'%}" alt="Icon search">Поиск компании для вашего питомца</li>
-                <li><img src="{% static 'image\calendar.png'%}" alt="Icon calendar">Календарь событий</li>
-            </ul>
-            <div class="popUp-bg">
-                <div class="popUp">
-                    <p><button class="login">Вход</button> / <button class="register">Регистрация</button></p>
-                    <form id="form_register" method="POST" class="display_none">
-                        {% csrf_token %}
-                        {% for item in form_register %}
-                            <label for="{{item.id_for_label}}">{{ item.label }}</label><br/>
-                            {{item}}<br/>
-                            <div class="errors">{{ item.errors }}</div>
-                        {% endfor %}
-                        <input type="hidden" name="register">
-                        <div class="flex-reg">
-                           <input value="Зарегистрироваться" type="submit" class="buttons">
-                        </div>
-                    </form>
-                    <form id="form_login" method="POST">
-                        {% csrf_token %}
-                        {% for item in form_login %}
-                            <label for="{{item.id_for_label}}">{{ item.label }}</label><br/>
-                            {{item}}<br/>
-                        {% endfor %}
-                        <div class="errors">{{ form_login.non_field_errors }}</div>
-                        <input type="hidden" name="login">
-                        <div class="flex-reg">
-                           <input value="Войти" type="submit">
-                        </div>
-                    </form>
+        <main>
+            {% block main%}
+                <p class="slogan">Начните свое путешествие по миру дружбы и заботы о домашних животных прямо сейчас!</p>
+                <img class = "photo_pets" src="{% static 'image\pets.png'%}" alt="Pets photo">
+<!--                <img class = "photo_feet" src="{% static 'image\feet2.png'%}" alt="Pets feet">-->
+                <ul class="list">
+                    <li><img src="{% static 'image\advice.png'%}" alt="Icon advice">Индивидуальные советы от ветеринаров</li>
+                    <li><img src="{% static 'image\Search.png'%}" alt="Icon search">Поиск компании для вашего питомца</li>
+                    <li><img src="{% static 'image\calendar.png'%}" alt="Icon calendar">Календарь событий</li>
+                </ul>
+                <div class="popUp-bg">
+                    <div class="popUp">
+                        <p><button class="login">Вход</button> / <button class="register">Регистрация</button></p>
+                        <form id="form_register" method="POST" class="display_none">
+                            {% csrf_token %}
+                            {% for item in form_register %}
+                                <label for="{{item.id_for_label}}">{{ item.label }}</label>
+                                {{item}}
+                                <div class="errors">{{ item.errors }}</div>
+                            {% endfor %}
+                            <input type="hidden" name="register">
+                            <div class="flex-reg">
+                               <input value="Зарегистрироваться" type="submit" class="buttons">
+                            </div>
+                        </form>
+                        <form id="form_login" method="POST">
+                            {% csrf_token %}
+                            {% for item in form_login %}
+                                <label for="{{item.id_for_label}}">{{ item.label }}</label>
+                                {{item}}
+                            {% endfor %}
+                            <div class="errors">{{ form_login.non_field_errors }}</div>
+                            <input type="hidden" name="login">
+                            <div class="flex-reg">
+                               <input value="Войти" type="submit">
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        {% endblock %}
-    </main>
-    <footer>
-        <div class="info">&copy;2024 Your Pets. Все права защищены</div>
-        <div class="link"></div>
-    </footer>
+            {% endblock %}
+        </main>
+        <footer>
+            <div class="info">&copy;2024 Your Pets. Все права защищены</div>
+            <div class="link"></div>
+        </footer>
+    </div>
+
 </body>
 </html>
