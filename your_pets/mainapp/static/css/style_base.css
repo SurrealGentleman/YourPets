@@ -15,6 +15,10 @@
 body{
     height: 100%;
     font-family: "Comfortaa";
+    background-image: url('../image/feet2.png');
+    background-repeat: no-repeat;
+    background-position: right 30px top 100px ;
+    background-size: 450px;
 }
 
 header a{
@@ -25,6 +29,7 @@ header a{
 
 header{
     width: 100%;
+    height:84px;
     background-color: #b0d4b2;
     display: flex;
     justify-content: space-between;
@@ -69,7 +74,6 @@ header .buttons{
     font-weight:bold;
     font-size:14pt;
     float:right;
-
 }
 
 .icon_close{
@@ -79,7 +83,7 @@ header .buttons{
     width:25px;
 }
 
-.popUp-bg{
+.popUp-bg, .overlay{
     position: fixed;
     top: 0;
     left: 0;
@@ -116,7 +120,8 @@ header .buttons{
 }
 
 .popUp form input, textarea{
-    margin: 5px 0 0 0;
+    font-family: "Comfortaa";
+    margin: 5px 0 5px 0;
     padding-left:7px;
     height: 30px;
     width: 300px;
@@ -131,15 +136,21 @@ form textarea{
     font-family: "Comfortaa";
     padding:5px;
 }
-.errors{
+.errors li{
+    display:inline-block;
     color: red;
     font-size: 8pt;
-    margin: 3px 0 5px 0;
-    padding-left:7px;
+    max-width: 300px;
+    margin: 5px 0 5px 0;
+    padding-left:0;
 }
 
 .display_none{
     display:none;
+}
+
+.popUp label{
+    display: block;
 }
 
 .popUp form label {
@@ -156,7 +167,7 @@ form textarea{
 .popUp form input[type="submit"] {
     background: #B0D4B2;
     color: white;
-    font-size: 20px;
+    font-size: 16px;
     border: 0;
     border-radius: 10px;
     height:30px;
@@ -168,6 +179,12 @@ form textarea{
 
 .no-scroll {
     overflow-y: hidden;
+}
+
+.container {
+  display: flex; /* Создаем гибкую структуру */
+  flex-direction: column; /* Располагаем элементы вертикально */
+  min-height: 100vh; /* Минимальная высота равна высоте вьюпорта */
 }
 
 main .photo_pets{
@@ -195,13 +212,12 @@ main .photo_feet{
     display: inline-block;
 }
 
-main ul{
+main .list{
     font-size: 16pt;
-    margin-left: 70px;
-    margin-top: 30px;
+    margin: 30px 0 0 70px;
     list-style-type: none;
 }
-main li{
+main .list li{
     margin-bottom: 30px;
     display:flex;
     align-items:center;
@@ -212,12 +228,14 @@ main li img{
     margin-right:10px;
 }
 
+.footer {
+  margin-top: auto;
+}
+
 footer{
+    margin-top: auto;
     background-color: #b0d4b2;
     color:white;
-    position: absolute;
-	bottom: 0;
-	width: 100%;
 	height: 30px;
     display:flex;
     align-items:center;

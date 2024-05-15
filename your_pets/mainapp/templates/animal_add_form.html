@@ -1,28 +1,187 @@
 {% load static %}
 {% if form_type == 'add' %}
-    {{form}}
-    <button type="submit" name="pet_add">Cоздать</button>
+<!--    <div class="form_pet">-->
+<!--        {{form}}-->
+<!--        -->
+<!--    </div>-->
+
+    <div class="form_pet">
+        <div class="form_photo_name">
+            <div class="photo-container">
+                <div class="photo-wrapper">
+                    <div class="plus-icon add-icon">
+                        <img src="{% static 'image\add-photo.png'%}">
+                    </div>
+                </div>
+                {{form.photo}}
+            </div>
+            {{form.name}}
+        </div>
+        <div class="form_info_pet">
+            <div class="block_info">
+                <div>
+                    <div class="input_block">
+                        <label for="pet_info_kind" class="flex_label">
+                            <img class='info_icon' src="{% static 'image\kind2.png'%}">
+                            {{form.kind.label}}
+                        </label>
+                        {{form.kind}}
+
+                        <label for="pet_info_color" class="flex_label">
+                            <img class='info_icon' src="{% static 'image\color2.png'%}">
+                            {{form.color.label}}
+                        </label>
+                        {{form.color}}
+                    </div>
+                </div>
+
+                <div>
+                    <label for="pet_info_breed" class="flex_label">
+                        <img class='info_icon' src="{% static 'image\breed2.png'%}">
+                        {{form.breed.label}}
+                    </label>
+                    {{form.breed}}
+
+                    <label for="pet_info_birth" class="flex_label">
+                        <img class='info_icon' src="{% static 'image\birth2.png'%}">
+                        {{form.birth.label}}
+                    </label>
+                    {{form.birth}}
+                </div>
+            </div>
+
+            <div class="block_info">
+                <div>
+                    <label for="pet_info_gender" class="flex_label">
+                        <img class='info_icon' src="{% static 'image\gender.png'%}">
+                        {{form.gender.label}}
+                    </label>
+                    {{form.gender}}
+                </div>
+
+                <label class="search">
+                    {{form.search}}{{ form.search.label }}
+                    <img class='info_icon' src="{% static 'image\info2.png'%}">
+                    <span class="hint">
+                        при выборе данной опции вы сможете
+                        указать цель поиска друга для вашего питомца
+                    </span>
+
+                </label>
+            </div>
+            <div>
+                <label for="{{form.mission.id_for_label}}" class="flex_label">
+                    <img class='info_icon' src="{% static 'image\target.png'%}">
+                    {{ form.mission.label }}
+                </label>
+                {{form.mission}}
+            </div>
+            <div>
+                <label for="{{form.comment.id_for_label}}" class="flex_label">
+                    <img class='info_icon' src="{% static 'image\comment.png'%}">
+                    {{ form.comment.label }}
+                </label>
+                <div class="comment_text">
+                    {{form.comment}}
+                </div>
+            </div>
+
+            <input type="hidden" name="pet" value="{{pet_info.pk}}">
+            <button type="submit" name="pet_add" class="button_change">Cоздать</button>
+<!--            <button type="submit" name="pet_change" class="button_change">Изменить</button>-->
+<!--            <button type="submit" name="pet_delete" class="button_change">Удалить</button>-->
+        </div>
+    </div>
+
 {% elif form_type == 'update' %}
-    <img class='round_pets' src="{{pet_info.photo.url}}" alt="photo_pet">
-    {{form.photo}}
+    <div class="form_pet">
+        <div class="form_photo_name">
+            <div class="photo-container">
+                <div class="photo-wrapper">
+                    <img id ='photo-preview' class='round_pets' src="{{pet_info.photo.url}}" alt="photo_pet">
+                    <div class="plus-icon">
+                        <img src="{% static 'image\add-photo.png'%}">
+                    </div>
+                </div>
+                {{form.photo}}
+            </div>
+            <input type="text" id="pet_info_name" value="{{pet_info.name}}" disabled>
+        </div>
+        <div class="form_info_pet">
+            <div class="block_info">
+                <div>
+                    <div class="input_block">
+                        <label for="pet_info_kind" class="flex_label">
+                            <img class='info_icon' src="{% static 'image\kind2.png'%}">
+                            Вид животного
+                        </label>
+                        <input class='left' type="text" id="pet_info_kind" value="{{pet_info.kind}}" disabled>
 
-    <label for="pet_info_name">Имя/Кличка</label>
-    <input type="text" id="pet_info_name" value="{{pet_info.name}}" disabled>
-    <input type="text" id="pet_info_kind" value="{{pet_info.kind}}" disabled>
-    <input type="text" id="pet_info_breed" value="{{pet_info.breed}}" disabled>
-    <input type="text" id="pet_info_birth" value="{{pet_info.birth}}" disabled>
-    <input type="text" id="pet_info_gender" value="{{pet_info.gender}}" disabled>
-    <input type="text" id="pet_info_color" value="{{pet_info.color}}" disabled>
+                        <label for="pet_info_color" class="flex_label">
+                            <img class='info_icon' src="{% static 'image\color2.png'%}">
+                            Окрас
+                        </label>
+                        <input class='left' type="text" id="pet_info_color" value="{{pet_info.color}}" disabled>
+                    </div>
+                </div>
 
-    <label for="{{form.search.id_for_label}}">{{ form.search.label }}</label>
-    {{form.search}}
-    <label for="{{form.mission.id_for_label}}">{{ form.mission.label }}</label>
-    {{form.mission}}
-    <label for="{{form.comment.id_for_label}}">{{ form.comment.label }}</label>
-    {{form.comment}}
+                <div>
+                    <label for="pet_info_breed" class="flex_label">
+                        <img class='info_icon' src="{% static 'image\breed2.png'%}">
+                        Порода
+                    </label>
+                    <input type="text" id="pet_info_breed" value="{{pet_info.breed}}" disabled>
 
-    <input type="hidden" name="pet" value="{{pet_info.pk}}">
-    <button type="submit" name="pet_change">Изменить</button>
-    <button type="submit" name="pet_delete">Удалить</button>
+                    <label for="pet_info_birth" class="flex_label">
+                        <img class='info_icon' src="{% static 'image\birth2.png'%}">
+                        Дата рождения
+                    </label>
+                    <input type="text" id="pet_info_birth" value="{{pet_info.birth}}" disabled>
+                </div>
+            </div>
+
+            <div class="block_info">
+                <div>
+                    <label for="pet_info_gender" class="flex_label">
+                        <img class='info_icon' src="{% static 'image\gender.png'%}">
+                        Пол
+                    </label>
+                    <input class='left' type="text" id="pet_info_gender" value="{{pet_info.gender}}" disabled>
+                </div>
+
+                <label class="search">
+                    {{form.search}}{{ form.search.label }}
+                    <img class='info_icon' src="{% static 'image\info2.png'%}">
+                    <span class="hint">
+                        при выборе данной опции вы сможете
+                        указать цель поиска друга для вашего питомца
+                    </span>
+
+                </label>
+            </div>
+            <div id = 'mission'>
+                <label for="{{form.mission.id_for_label}}" class="flex_label">
+                    <img class='info_icon' src="{% static 'image\target.png'%}">
+                    {{ form.mission.label }}
+                </label>
+                {{form.mission}}
+            </div>
+            <div>
+                <label for="{{form.comment.id_for_label}}" class="flex_label">
+                    <img class='info_icon' src="{% static 'image\comment.png'%}">
+                    {{ form.comment.label }}
+                </label>
+                <div class="comment_text">
+                    {{form.comment}}
+                </div>
+            </div>
+
+            <input type="hidden" name="pet" value="{{pet_info.pk}}">
+            <button type="submit" name="pet_change" class="button_change">Изменить</button>
+            <button type="submit" name="pet_delete" class="button_change">Удалить</button>
+        </div>
+    </div>
+
 {% endif %}
 <script src="{% static 'js\send_request_getBreeds.js' %}"></script>
+<script src="{% static 'js\show_mission.js'%}"></script>

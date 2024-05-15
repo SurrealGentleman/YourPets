@@ -5,18 +5,14 @@
 
 .profile_block{
     background-color: #CCEACE;
-    height: 100%;
-    position: absolute;
-    top:0;
-    bottom:0;
-    z-index:-1;
-}
-
-.sticky{
-    margin-top:100px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: calc(100vh - 114px);
+}
+
+.user_pets .slogan{
+    width: auto;
 }
 
 .photo_user{
@@ -50,8 +46,9 @@ a.change_password:visited {
     align-items: center;
 }
 
-.form_profile input, select,textarea{
-    margin: 5px 0 0 0;
+.form_profile input, select, textarea{
+    font-family: "Comfortaa";
+    margin: 5px 0 10px 0;
     padding-left:7px;
     height: 25px;
     width: 270px;
@@ -61,11 +58,11 @@ a.change_password:visited {
 }
 
 .form_profile label{
-    padding-left:7px;
     font-weight: bold;
 }
 .button_change{
-    background: #B0D4B2;
+    font-family: "Comfortaa";
+    background: #B0D4B2 !important;
     color: white;
     border: 0;
     border-radius: 10px;
@@ -76,11 +73,15 @@ a.change_password:visited {
 
 .user_pets{
     align-self:flex-start;
-    margin-left:370px;
 }
 
 .user_pets p{
     margin-top:35px;
+}
+
+.user_pets form{
+    margin: 50px 0 0 30px;
+    background-color: white;
 }
 
 .choice_pet{
@@ -111,4 +112,242 @@ a.change_password:visited {
 .round_pets img{
     width:50px;
     height: 50px;
+}
+
+.form_pet{
+    border: 2px solid #B0D4B2;
+    border-radius: 40px;
+    width:800px;
+    display:flex;
+    margin-bottom: 50px;
+}
+
+.form_info_pet{
+    font-size:15pt;
+    padding: 30px;
+}
+
+.form_info_pet input, select{
+    font-family: "Comfortaa";
+    width: 211px;
+    height: 30px;
+    font-size: 12pt;
+    border: 2px solid #B0D4B2;
+    border-radius: 10px;
+    margin: 7px 0px 15px 0;
+    padding-left: 7px;
+    color: black;
+    display: block;
+}
+
+.form_info_pet select:last-child{
+    width: 260px;
+}
+
+.left{
+    margin-right: 50px !important;
+}
+
+.block_info{
+    display: flex;
+    align-items: flex-end;
+}
+
+.block_info input{
+    width: 200px;
+}
+.form_photo_name input{
+    font-family: "Comfortaa";
+}
+.search{
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    width: 200px;
+    margin-bottom: 20px;
+}
+
+.search img{
+    margin-left:7px;
+    margin-bottom:10px;
+    width:20px;
+}
+
+.search:after{
+    width: 20px;
+}
+
+input[type="checkbox"] {
+    margin:0 10px 0 0;
+    appearance: none;
+    -webkit-appearance: none;
+    width: 25px;
+    height: 25px;
+    display:inline;
+    border: 2px solid #B0D4B2;
+    border-radius: 5px;
+}
+input[type="checkbox"]:checked {
+    background-image: url('../image/check.png');
+    background-size: 20px;
+    background-position: center;
+}
+
+.form_pet select{
+    border: 2px solid #B0D4B2;
+    border-radius: 10px;
+    font-size: 12pt;
+    height: 35px;
+    margin-bottom: 15px;
+}
+
+.flex_label{
+    display: flex;
+    align-items: flex-end;
+}
+
+.comment_text textarea{
+    padding: 10px;
+    font-size: 12pt;
+    width: 460px;
+    border: 2px solid #B0D4B2;
+    border-radius: 10px;
+}
+
+/*РАБОТА С ФОТКОЙ ЖИВОТНОГО И ДОБАВЛЕНИЕ НОВОГО ФОТО*/
+.form_photo_name{
+    padding: 30px 25px;
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #CCEACE;
+    border-radius: 40px 0 0 40px;
+}
+
+.form_photo_name .round_pets{
+    width: 130px;
+    height: 130px;
+    margin: 0;
+}
+
+input[type="file"]{
+    display: none;
+}
+
+
+.photo-container {
+    height:150px;
+}
+
+.photo-wrapper {
+    cursor: pointer;
+}
+
+.plus-icon {
+    transform: translate(0%, -103%);
+    background-color: white;
+    width: 130px;
+    height: 130px;
+    display: flex;
+    border-radius: 100px;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.plus-icon img{
+    width: 50px !important;
+    height: 50px !important;
+}
+
+.photo-wrapper:hover .plus-icon {
+    opacity: 1;
+}
+
+#pet_info_name, #id_name{
+    height: 15px;
+    width: 200px;
+    font-size: 16pt;
+    background: white;
+    border: 0;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+}
+/*РАБОТА С ДОБАВЛЕНИЕМ ФОТО В ФОРМЕ ДОБАВЛЕНИЯ*/
+.add-icon{
+    opacity:1;
+    transform: translate(0%, 0%);
+}
+
+/*ПОДСКАЗКА ОКОЛО ПОИСКА*/
+
+.info_icon{
+    width: 30px;
+    margin-right: 10px;
+}
+
+.hint{
+    display: none;
+    width: 200px;
+    position: absolute;
+    top: 110%;
+    padding: 5px;
+    background-color: #CCEACE;
+    font-size: 8pt;
+    font-weight:bold;
+    border-radius: 10px;
+}
+
+.info_icon:hover + .hint {
+    display: block;
+    padding: 7px;
+}
+
+/*ПОПАПЫ ПАРОЛЬ И УДАЛЕНИЕ*/
+
+.name_popup{
+    color: #B0D4B2;
+    margin: 10px 0 20px 0 ;
+    font-weight: bold;
+    font-size: 14pt;
+}
+
+.password{
+    height: 230px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.password button[type="submit"]{
+    font-size: 12pt !important;
+    margin-top: 10px;
+    padding-bottom: 25px;
+}
+
+#confirmModal{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50px;
+    left: 35%;
+    width: 350px;
+    height: 100px;
+    background: #E4EAE5;
+    border-radius: 40px;
+    padding: 30px;
+    border: 2px solid #9A9F9B;
+}
+
+#confirmModal div{
+    margin-top: 15px;
+}
+
+#confirmModal a{
+    text-decoration: none;
+    color: white;
 }

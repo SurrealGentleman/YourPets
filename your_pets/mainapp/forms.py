@@ -73,13 +73,13 @@ class PasswordChangeForm(UserChangeForm):
 
 class AnimalAddForm(forms.ModelForm):
     name = forms.CharField(label='Имя', max_length=100)
-    kind = forms.ModelChoiceField(queryset=KindOfAnimal.objects.all(), label='Вид животного', empty_label=' ')
-    breed = forms.ModelChoiceField(queryset=Breed.objects.none(), label='Порода животного', empty_label=None)
+    kind = forms.ModelChoiceField(queryset=KindOfAnimal.objects.all(), label='Вид животного', empty_label=' ', widget=forms.Select(attrs={'class':'left'}))
+    breed = forms.ModelChoiceField(queryset=Breed.objects.none(), label='Порода', empty_label=None)
     birth = forms.DateField(label='Дата рождения', widget=forms.DateInput(attrs={'type': 'date'}))
-    gender = forms.ModelChoiceField(queryset=Gender.objects.all(), label='Пол', empty_label=' ')
-    color = forms.CharField(label='Окрас', max_length=100)
+    gender = forms.ModelChoiceField(queryset=Gender.objects.all(), label='Пол', empty_label=' ', widget=forms.Select(attrs={'class':'left'}))
+    color = forms.CharField(label='Окрас', max_length=100, widget=forms.TextInput(attrs={'class':'left'}))
     search = forms.BooleanField(label='Поиск', required=False)
-    mission = forms.ModelChoiceField(queryset=Mission.objects.all(), label='Цель', empty_label=' ')
+    mission = forms.ModelChoiceField(queryset=Mission.objects.all(), label='Цель', required=False)
     photo = forms.ImageField(label='Фото', widget=forms.FileInput())
     comment = forms.CharField(label='Комментарий', max_length=100, widget=forms.Textarea())
 
@@ -100,7 +100,7 @@ class AnimalAddForm(forms.ModelForm):
 
 class PetChangeForm(forms.ModelForm):
     search = forms.BooleanField(label='Поиск', required=False)
-    mission = forms.ModelChoiceField(queryset=Mission.objects.all(), label='Цель', empty_label=' ')
+    mission = forms.ModelChoiceField(queryset=Mission.objects.all(), label='Цель', required=False)
     photo = forms.ImageField(label='Фото', widget=forms.FileInput())
     comment = forms.CharField(label='Комментарий', max_length=100, widget=forms.Textarea())
 
