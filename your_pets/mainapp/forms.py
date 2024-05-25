@@ -4,17 +4,17 @@ from .models import *
 
 
 class CustomUserLoginForm(AuthenticationForm):
-    username = forms.EmailField(label='Email', widget=forms.EmailInput())
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput())
+    username = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'autocomplete': 'username'}))
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'autocomplete': 'current-password'}))
 
 
 class CustomUserCreationForm(UserCreationForm):
     first_name = forms.CharField(label='Имя', widget=forms.TextInput())
     last_name = forms.CharField(label='Фамилия', widget=forms.TextInput())
-    email = forms.EmailField(label='Email', widget=forms.EmailInput())
+    email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'autocomplete': 'username'}))
     connect = forms.CharField(label='Контактные данные', widget=forms.Textarea())
-    password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput())
-    password2 = forms.CharField(label='Подтверждение пароля', widget=forms.PasswordInput())
+    password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}))
+    password2 = forms.CharField(label='Подтверждение пароля', widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}))
 
     class Meta:
         model = CustomUser

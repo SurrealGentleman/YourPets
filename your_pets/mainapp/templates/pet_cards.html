@@ -3,6 +3,9 @@
 {% block title%}Лента{% endblock %}
 {% block src%}
     <script src="{% static 'js\send_request_getBreeds_by_pet.js' %}"></script>
+    <script type="text/javascript">
+        var selectedBreedIds = {{ breed_list|safe }};
+    </script>
     <link rel="stylesheet" href="{% static 'css\style_lenta_pets.css' %}" />
 {% endblock %}
 {% block main%}
@@ -97,7 +100,4 @@
 
 
 
-<script type="text/javascript">
-    var selectedBreedIds = {{ breed_list|safe }};
-</script>
 
