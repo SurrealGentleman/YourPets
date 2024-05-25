@@ -16,8 +16,28 @@ $(document).ready(function(){
     if (file) {
       const reader = new FileReader();
       reader.onload = function() {
-        photoPreview.src = reader.result;
+        if (photoPreview) {
+          photoPreview.src = reader.result;
+        }
       };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  //Вывод фотографии при выборе в форме добавления питомца
+  $(document).on('change', '#id_photo', function() {
+    var photoInput = document.getElementById('id_photo');
+    var previewImage = document.getElementById('preview-image');
+
+    var file = photoInput.files[0];
+    console.log(file)
+    if (file) {
+      var reader = new FileReader();
+        reader.onload = function(e) {
+          previewImage.src = e.target.result; // Устанавливаем src для изображения
+          previewImage.style.display = 'block'; // Показываем изображение
+          $('.plus-icon').hide(); // Скрываем иконку "плюс"
+        }
       reader.readAsDataURL(file);
     }
   });

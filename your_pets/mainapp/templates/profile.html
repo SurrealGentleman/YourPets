@@ -8,6 +8,7 @@
     <script src="{% static 'js\timeout_redirect.js'%}"></script>
     <script src="{% static 'js\add_photo.js'%}"></script>
     <script src="{% static 'js\confirm_delete_user.js'%}"></script>
+    <script src="{% static 'js\first_radio_checked.js'%}"></script>
 {% endblock %}
 {% block main%}
     <div class="flex_block">
@@ -22,14 +23,15 @@
                         <div class="errors">{{ item.errors }}</div>
                     {% endfor %}
                     <a href="" class="open_popup change_password" id="change_password">Сменить пароль</a>
-                    <a href="#" class="change_password" onclick="return showModal()">Удалить</a>
+                    <a href="javascript:void(0)" class="change_password" onclick="return showModal()">Удалить</a>
+<!--                    javascript:void(0) - Это выражение возвращается как «undefined», что означает, что не будет производиться редирект на другую страницу-->
                 </div>
                 <div class="overlay">
                    <div id="confirmModal" style="display:none;">
                        <p>Вы уверены, что хотите продолжить?</p>
                        <div>
-                           <a id="yesBtn"  href="{% url 'delete_user' %}" ><button class="button_change">Да</button></a>
-                           <button id="noBtn" class="button_change" >Нет</button>
+                           <a id="yesBtn" class="button_change" href="{% url 'delete_user' %}" >Да</a>
+                           <a id="noBtn" class="button_change" >Нет</a>
                        </div>
                    </div>
                 </div>
@@ -66,12 +68,16 @@
     <div class="popUp-bg">
         <div class="popUp">
             <p class="name_popup">Сменить пароль</p>
-            <form method="POST" class="password">
+            <form id="form_change_password" method="POST" class="password">
                 {% csrf_token %}
-                <div>
-                    {{form_password_change.as_p}}
+                {% for item in form_password_change %}
+                    <label for="{{item.id_for_label}}">{{ item.label }}</label>
+                    {{item}}
+                    <div class="errors">{{ item.errors }}</div>
+                {% endfor %}
+                <div class="flex-reg">
+                    <button type="submit" class="button_change" name="password_change">Изменить</button>
                 </div>
-                <button type="submit" class="button_change" name="password_change">Изменить</button>
             </form>
         </div>
     </div>

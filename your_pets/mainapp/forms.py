@@ -81,7 +81,7 @@ class AnimalAddForm(forms.ModelForm):
     color = forms.CharField(label='Окрас', max_length=100, widget=forms.TextInput(attrs={'class':'left'}))
     search = forms.BooleanField(label='Поиск', required=False)
     mission = forms.ModelChoiceField(queryset=Mission.objects.all(), label='Цель', required=False)
-    photo = forms.ImageField(label='Фото', widget=forms.FileInput())
+    photo = forms.ImageField(label='Фото', widget=forms.FileInput(), required=False)
     comment = forms.CharField(label='Комментарий', max_length=100, widget=forms.Textarea())
 
     class Meta:

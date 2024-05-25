@@ -61,6 +61,7 @@ a.change_password:visited {
     font-weight: bold;
 }
 .button_change{
+    text-align: center;
     font-family: "Comfortaa";
     background: #B0D4B2 !important;
     color: white;
@@ -107,6 +108,7 @@ a.change_password:visited {
     object-fit: cover;
     border-radius: 100px;
     margin-right: 15px;
+    cursor: pointer;
 }
 
 .round_pets img{
@@ -141,7 +143,7 @@ a.change_password:visited {
 }
 
 .form_info_pet select:last-child{
-    width: 260px;
+    width: 270px;
 }
 
 .left{
@@ -221,7 +223,7 @@ input[type="checkbox"]:checked {
     align-items: center;
     flex-direction: column;
     background-color: #CCEACE;
-    border-radius: 40px 0 0 40px;
+    border-radius: 38px 0 0 38px;
 }
 
 .form_photo_name .round_pets{
@@ -241,6 +243,7 @@ input[type="file"]{
 
 .photo-wrapper {
     cursor: pointer;
+    height: 130px;
 }
 
 .plus-icon {
@@ -315,10 +318,9 @@ input[type="file"]{
 }
 
 .password{
-    height: 230px;
+    min-height:230px;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 
@@ -326,6 +328,7 @@ input[type="file"]{
     font-size: 12pt !important;
     margin-top: 10px;
     padding-bottom: 25px;
+
 }
 
 #confirmModal{
@@ -350,4 +353,10 @@ input[type="file"]{
 #confirmModal a{
     text-decoration: none;
     color: white;
+    display: inline-block;
+    padding-top:5px;
+}
+/*ЗАТЕМНЕНИЕ НЕ ВЫБРАННЫХ ФОТОК*/
+.darkening{
+    filter: brightness(40%)
 }

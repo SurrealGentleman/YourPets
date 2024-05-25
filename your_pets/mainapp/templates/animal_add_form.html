@@ -1,10 +1,5 @@
 {% load static %}
 {% if form_type == 'add' %}
-<!--    <div class="form_pet">-->
-<!--        {{form}}-->
-<!--        -->
-<!--    </div>-->
-
     <div class="form_pet">
         <div class="form_photo_name">
             <div class="photo-container">
@@ -12,6 +7,7 @@
                     <div class="plus-icon add-icon">
                         <img src="{% static 'image\add-photo.png'%}">
                     </div>
+                    <img id="preview-image" class="round_pets" src="#" alt="Предварительный просмотр" style="display: none;">
                 </div>
                 {{form.photo}}
             </div>
@@ -69,7 +65,7 @@
 
                 </label>
             </div>
-            <div>
+            <div id = 'mission_form_add'>
                 <label for="{{form.mission.id_for_label}}" class="flex_label">
                     <img class='info_icon' src="{% static 'image\target.png'%}">
                     {{ form.mission.label }}
@@ -88,8 +84,6 @@
 
             <input type="hidden" name="pet" value="{{pet_info.pk}}">
             <button type="submit" name="pet_add" class="button_change">Cоздать</button>
-<!--            <button type="submit" name="pet_change" class="button_change">Изменить</button>-->
-<!--            <button type="submit" name="pet_delete" class="button_change">Удалить</button>-->
         </div>
     </div>
 

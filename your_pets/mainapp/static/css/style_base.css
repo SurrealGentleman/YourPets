@@ -82,6 +82,10 @@ header .buttons{
     right: 20px;
     width:25px;
 }
+/*СТИЛИ ДЛЯ ЗАГОЛОВКА В ПОПАПЕ ВХОД РЕГИСТР.*/
+.active{
+    border-bottom: 2px solid #8B9F8C !important;
+}
 
 .popUp-bg, .overlay{
     position: fixed;
@@ -116,7 +120,8 @@ header .buttons{
     background: none;
     cursor: pointer; /* при наведении курсор становится в форме руки */
     font-size: 16pt;
-    padding: 10px 0 20px 0;
+    padding: 10px 0 5px 0;
+    margin-bottom: 20px;
 }
 
 .popUp form input, textarea{
@@ -136,7 +141,8 @@ form textarea{
     font-family: "Comfortaa";
     padding:5px;
 }
-.errors li{
+
+.errors li, .errors ul{
     display:inline-block;
     color: red;
     font-size: 8pt;

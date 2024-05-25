@@ -14,8 +14,8 @@ $(document).ready(function() {
                         if (data.length > 0) {
                             $.each(data, function(index, breed) {
                                 $('#id_breed')
-                                .append('<input type="checkbox" name="breed" id="' + breed.id + '" value="'
-                            + breed.id + '">' + '<label for="' + breed.id + '">' + breed.name + '</label>');
+                                .append('<div><input type="checkbox" name="breed" id="' + breed.id + '" value="'
+                            + breed.id + '">' + '<label for="' + breed.id + '">' + breed.name + '</label></div>');
                             });
 
                             $('input[name="breed"]').each(function() {
@@ -52,8 +52,8 @@ $(document).ready(function() {
                     if (data.length > 0) {
                         $.each(data, function(index, breed) {
                             $('#id_breed')
-                                .append('<input type="checkbox" name="breed" id="' + breed.id + '" value="'
-                            + breed.id + '">' + '<label for="' + breed.id + '">' + breed.name + '</label>');
+                                .append('<div><input type="checkbox" name="breed" id="' + breed.id + '" value="'
+                            + breed.id + '">' + '<label for="' + breed.id + '">' + breed.name + '</label></div>');
                         });
                     } else {
                         $('#id_breed').append('<option value="">Нет доступных пород</option>');

@@ -1,29 +1,102 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-</head>
-<body>
-    Лента<br><br><br><br><br><br><br>
-    <form method="GET">
-        {{form}}
-        <button type="submit">Фильтр</button>
-    </form>
+{% block title%}Лента{% endblock %}
+{% block src%}
     <script src="{% static 'js\send_request_getBreeds_by_pet.js' %}"></script>
-    {% for card in cards %}
-        {{card}}
-        {{card.gender}}
-        <form method="POST">
-            {%csrf_token%}
-            <input type="hidden" name="card_id" value="{{card.pk}}">
-            <button type="submit">лайк</button>
-        </form>
+    <link rel="stylesheet" href="{% static 'css\style_lenta_pets.css' %}" />
+{% endblock %}
+{% block main%}
+    <div class="flex-block">
+        <form method="GET" class="filter">
+    {% for field in form %}
+        {% if field.name == 'pet' %}
+            <div class="block_filter">
+                <legend>Мои питомцы</legend>
+                <div class = "filter_choice" id="id_pet">
+                    {% for choice in field %}
+                        <div>
+                            <label for="{{ choice.id_for_label }}">
+                                {{ choice.tag }}
+                                {{ choice.choice_label }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% elif field.name == 'mission' %}
+            <div class="block_filter">
+                <legend>Цель</legend>
+                <div class = "filter_choice" id="id_mission">
+                    {% for choice in field %}
+                        <div>
+                            <label for="{{ choice.id_for_label }}">
+                                {{ choice.tag }}
+                                {{ choice.choice_label }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% elif field.name == 'gender' %}
+            <div class="block_filter">
+                <legend>Пол</legend>
+                <div class = "filter_choice" id="id_gender">
+                    {% for choice in field %}
+                        <div>
+                            <label for="{{ choice.id_for_label }}">
+                                {{ choice.tag }}
+                                {{ choice.choice_label }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% elif field.name == 'breed' %}
+            <div class="block_filter">
+                <legend>Порода животного</legend>
+                <div class = "filter_choice" id="id_breed">
+                    <div>{{ field }}</div>
+                </div>
+                <button type="submit">Фильтр</button>
+            </div>
+        {% endif %}
     {% endfor %}
-</body>
-</html>
+
+</form>
+        <div>
+            {% for card in cards %}
+                {{card}}
+                {{card.gender}}
+                <form method="POST">
+                    {%csrf_token%}
+                    <input type="hidden" name="card_id" value="{{card.pk}}">
+                    <button type="submit">лайк</button>
+                </form>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+
+
+<!--<!DOCTYPE html>-->
+<!--{% load static %}-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+
+
 <script type="text/javascript">
     var selectedBreedIds = {{ breed_list|safe }};
 </script>
