@@ -1,21 +1,23 @@
 $(document).ready(function(){
-    var checkbox = document.getElementById('id_search');
-    var mission = document.getElementById('mission');
+    var checkbox = $('#id_search');
+    var mission = $('#mission');
+    var mission_form_add = $('#mission_form_add');
 
-    if (checkbox.checked){
-        mission.style.display = 'block';
-    }
-    else{
-        mission.style.display = 'none';
-    }
-
-    checkbox.addEventListener('change', function(){
-        if (checkbox.checked){
-            mission.style.display = 'block';
-        }
-        else{
-            mission.style.display = 'none';
+    checkbox.change(function() {
+        if (checkbox.is(':checked')) {
+            mission.show();
+            mission_form_add.show();
+        } else {
+            mission.hide();
+            mission_form_add.hide();
         }
     });
 
+    if (checkbox.is(':checked')) {
+        mission.show();
+        mission_form_add.show();
+    } else {
+        mission.hide();
+        mission_form_add.hide();
+    }
 });

@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="{% static 'css\style_base.css' %}" />
     {% block src%}
         <script src="{% static 'js\open_popup.js'%}"></script>
-        <script src="{% static 'js\form_display_none.js'%}"></script>
     {% endblock %}
 </head>
 <body>
@@ -29,7 +28,7 @@
                 <button><a href="{% url 'profile' %}"><img src="{% static 'image\profile.png' %}" alt="Profile"></a></button>
                 <div class="button_lents_advice">
                     <button><a href="#">Советы</a></button>
-                    <button><a href="#">Лента</a></button>
+                    <button><a href="{% url 'pet_cards' %}">Лента</a></button>
                 </div>
 <!--                <button><a href="#"><img src="{% static 'image\icon_calendar.png' %}" alt="Exit"></a></button>-->
 <!--                <button><a href="#"><img src="{% static 'image\winner.png' %}" alt="Exit"></a></button>-->
@@ -40,7 +39,6 @@
             {% block main%}
                 <p class="slogan">Начните свое путешествие по миру дружбы и заботы о домашних животных прямо сейчас!</p>
                 <img class = "photo_pets" src="{% static 'image\pets.png'%}" alt="Pets photo">
-<!--                <img class = "photo_feet" src="{% static 'image\feet2.png'%}" alt="Pets feet">-->
                 <ul class="list">
                     <li><img src="{% static 'image\advice.png'%}" alt="Icon advice">Индивидуальные советы от ветеринаров</li>
                     <li><img src="{% static 'image\Search.png'%}" alt="Icon search">Поиск компании для вашего питомца</li>
@@ -49,7 +47,7 @@
                 <div class="popUp-bg">
                     <div class="popUp">
                         <p><button class="login">Вход</button> / <button class="register">Регистрация</button></p>
-                        <form id="form_register" method="POST" class="display_none">
+                        <form id="form_register" method="POST">
                             {% csrf_token %}
                             {% for item in form_register %}
                                 <label for="{{item.id_for_label}}">{{ item.label }}</label>
@@ -82,6 +80,5 @@
             <div class="link"></div>
         </footer>
     </div>
-
 </body>
 </html>

@@ -1,0 +1,48 @@
+.flex-block{
+    display:flex;
+}
+
+.filter{
+    min-height: 450px;
+    width: 300px;
+    border: 2px solid #b0d4b2;
+    border-left: 0;
+    border-radius: 0 20px 20px 0;
+    margin: 30px 0 30px 0;
+}
+
+.block_filter{
+    border-bottom: 2px solid #b0d4b2;
+    padding: 20px 0 10px 10px;
+}
+
+.block_filter:last-child{
+    border: 0;
+}
+
+legend{
+    padding-left: 10px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.filter_choice{
+    margin: 5px 0 0 20px;
+}
+
+form input{
+    margin-top: 7px;
+}
+
+form button{
+    text-align: center;
+    font-family: "Comfortaa";
+    background: #B0D4B2 !important;
+    color: white;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 150px;
+    height: 25px;
+    margin: 10px 0 0 70px;
+}
