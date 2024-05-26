@@ -1,60 +1,58 @@
 {% load static %}
 {% for card in cards %}
-    {% for card in cards%}
-        <div class="cards">
-            <div class="photo">
-               <img src="/media/images/pets/dog_02.jpg">
+    <div class="cards">
+        <div class="photo">
+           <img src="/media/images/pets/dog_02.jpg">
+        </div>
+        <div class="pet_info">
+            <div class="pet_name">
+                {{card.name}}
             </div>
-            <div class="pet_info">
-                <div class="pet_name">
-                    {{card.name}}
+            <div class="block_info">
+                <img class="info_icon" src="/static/image/breed2.png">
+                <div>
+                    <p>Порода</p>
+                    <p><b>{{card.breed}}</b></p>
                 </div>
-                <div class="block_info">
-                    <img class="info_icon" src="/static/image/breed2.png">
-                    <div>
-                        <p>Порода</p>
-                        <p><b>{{card.breed}}</b></p>
-                    </div>
+            </div>
+            <div class="block_info">
+                <img class="info_icon" src="/static/image/color2.png">
+                <div>
+                   <p>Окрас</p>
+                    <p><b>{{card.color}}</b></p>
                 </div>
-                <div class="block_info">
-                    <img class="info_icon" src="/static/image/color2.png">
-                    <div>
-                       <p>Окрас</p>
-                        <p><b>{{card.color}}</b></p>
-                    </div>
+            </div>
+            <div class="block_info">
+                <img class="info_icon" src="/static/image/birth2.png">
+                <div>
+                    <p>День рождения</p>
+                    <p><b>{{card.birth}}</b></p>
                 </div>
-                <div class="block_info">
-                    <img class="info_icon" src="/static/image/birth2.png">
-                    <div>
-                        <p>День рождения</p>
-                        <p><b>{{card.birth}}</b></p>
-                    </div>
+            </div>
+            <div class="block_info">
+                <img class="info_icon" src="/static/image/gender.png">
+                <div>
+                    <p>Пол</p>
+                    <b>{{card.gender}}</b>
                 </div>
-                <div class="block_info">
-                    <img class="info_icon" src="/static/image/gender.png">
-                    <div>
-                        <p>Пол</p>
-                        <b>{{card.gender}}</b>
-                    </div>
 
-                </div>
-                <div class="block_info">
-                    <img class="info_icon" src="/static/image/target.png">
-                    <div>
-                        <p>Цель</p>
-                        <b>{{card.mission}}</b>
-                    </div>
-                </div>
-                <div class="block_comment">
-                    {{card.comment}}
+            </div>
+            <div class="block_info">
+                <img class="info_icon" src="/static/image/target.png">
+                <div>
+                    <p>Цель</p>
+                    <b>{{card.mission}}</b>
                 </div>
             </div>
-                <form method="POST">
-                    {% csrf_token %}
-                    <input type="hidden" name="card_id" value="4">
-                    <button type="submit"><img src="/static/image/like.png"></button>
-                    <button type="submit"><img src="/static/image/like.png"></button>
-                </form>
+            <div class="block_comment">
+                {{card.comment}}
             </div>
-        {% endfor %}
+        </div>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="card_id" value="{{card.pk}}">
+                <button type="submit"><img src="/static/image/like.png"></button>
+                <button type="submit"><img src="/static/image/like.png"></button>
+            </form>
+        </div>
 {% endfor %}

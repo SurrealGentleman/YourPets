@@ -3,9 +3,15 @@
 {% block title%}Лента{% endblock %}
 {% block src%}
     <script src="{% static 'js\send_request_getBreeds_by_pet.js' %}"></script>
+    {% if selectedBreedIds != None %}
     <script type="text/javascript">
         var selectedBreedIds = {{ breed_list|safe }};
     </script>
+    {% else %}
+    <script type="text/javascript">
+        var selectedBreedIds = null;
+    </script>
+    {% endif %}
     <link rel="stylesheet" href="{% static 'css\style_lenta_pets.css' %}" />
 
 {% endblock %}
@@ -125,7 +131,7 @@
                 </div>
                     <form method="POST">
                         {% csrf_token %}
-                        <input type="hidden" name="card_id" value="4">
+                        <input type="hidden" name="card_id" value="{{card.pk}}">
                         <button type="submit"><img src="/static/image/like.png"></button>
                     </form>
                 </div>
@@ -133,26 +139,3 @@
         </div>
     </div>
 {% endblock %}
-
-
-
-<!--<!DOCTYPE html>-->
-<!--{% load static %}-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Title</title>-->
-<!--    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>-->
-<!--</head>-->
-<!--<body>-->
-
-<!--</body>-->
-<!--</html>-->
-
-
-
-
-
-
-
-

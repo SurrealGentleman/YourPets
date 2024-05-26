@@ -8,50 +8,99 @@
 {% block main%}
     <div class="flex-block">
         <form method="GET" class="filter">
-    {% for field in form %}
-        {% if field.name == 'pet' %}
-            <div class="block_filter">
-                <legend>Мои питомцы</legend>
-                <div class = "filter_choice" id="id_pet">
-                    {% for choice in field %}
-                        <div>
-                            <label for="{{ choice.id_for_label }}">
-                                {{ choice.tag }}
-                                {{ choice.choice_label }}
-                            </label>
-                        </div>
-                    {% endfor %}
+        {% for field in form %}
+            {% if field.name == 'pet' %}
+                <div class="block_filter">
+                    <legend>Мои питомцы</legend>
+                    <div class="filter_choice" id="id_pet">
+                        {% for choice in field %}
+                            <div>
+                                <label for="{{ choice.id_for_label }}">
+                                    {{ choice.tag }}
+                                    {{ choice.choice_label }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <div class="block_filter">
+                    <legend>Лайки</legend>
+                    <div class="filter_choice">
+                        {% for choice in field %}
+                            <div>
+                                <label for="{{ choice.id_for_label }}">
+                                    {{ choice.tag }}
+                                    {{ field.label }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+        </form>
+
+        <div class="lenta">
+            <div class="nav">
+                <div class="bottom-line">
+                    <a href="{% url 'pet_cards' %}">Лента питомцев</a>
+                    <a href="{% url 'likes' %}">Мои лайки</a>
                 </div>
             </div>
-            <button type="submit">Фильтр</button>
-        {% endif %}
-    {% endfor %}
-    </form>
-<!--    Лайки<br><br><br><br><br><br><br>-->
-<!--    {{form}}-->
-    <div class="lenta">
-        <div class="nav">
-            <div class="bottom-line">
-                <a href="{% url 'pet_cards' %}">Лента питомцев</a>
-                <a href="{% url 'likes' %}">Мои лайки</a>
-            </div>
+            <div id="card_likes"></div>
         </div>
-        <div id="card_likes"></div>
     </div>
 
-{% endblock %}
+
+
+
+
+
+
+
+
+
+
 
 <script>
     $(document).ready(function() {
-    $('input[name="pet"]').each(function() {
-        if ($(this).is(':checked')) {
+        $('input[name="pet"]').each(function() {
+            if ($(this).is(':checked')) {
+                var petId = $(this).val();
+                var mutual_likes = $('#id_mutual_likes').prop('checked');
+                if (petId) {
+                    $.ajax({
+                        url: '/get_cards_likes/',
+                        type: 'GET',
+                        data: {
+                            'pet_id': petId,
+                            'mutual_likes': mutual_likes
+                        },
+                        success: function(response) {
+                            $('#card_likes').html(response.cards_html);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Ошибка при получении карточек животных');
+                        }
+                    });
+                } else {
+                    $('#card_likes').empty();
+                }
+            }
+        });
+
+
+        $('input[name="pet"]').on('change', function() {
             var petId = $(this).val();
+            var mutual_likes = $('#id_mutual_likes').prop('checked');
             if (petId) {
                 $.ajax({
                     url: '/get_cards_likes/',
                     type: 'GET',
                     data: {
-                        'pet_id': petId
+                        'pet_id': petId,
+                        'mutual_likes': mutual_likes
                     },
                     success: function(response) {
                         $('#card_likes').html(response.cards_html);
@@ -60,33 +109,38 @@
                         console.error('Ошибка при получении карточек животных');
                     }
                 });
-            } else {
+            }
+            else {
                 $('#card_likes').empty();
             }
-        }
-    });
+        });
 
 
-    $('input[name="pet"]').on('change', function() {
-        var petId = $(this).val();
-        if (petId) {
-            $.ajax({
-                url: '/get_cards_likes/',
-                type: 'GET',
-                data: {
-                    'pet_id': petId
-                },
-                success: function(response) {
-                    $('#card_likes').html(response.cards_html);
-                },
-                error: function(xhr, status, error) {
-                    console.error('Ошибка при получении карточек животных');
-                }
-            });
-        }
-        else {
-            $('#card_likes').empty();
-        }
+
+        $('#id_mutual_likes').on('change', function() {
+            var mutual_likes = $('#id_mutual_likes').prop('checked');
+            var petId = $('input[name="pet"]:checked').val();
+            if (petId) {
+                $.ajax({
+                    url: '/get_cards_likes/',
+                    type: 'GET',
+                    data: {
+                        'pet_id': petId,
+                        'mutual_likes': mutual_likes
+                    },
+                    success: function(response) {
+                        $('#card_likes').html(response.cards_html);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Ошибка при получении карточек животных');
+                    }
+                });
+            }
+            else {
+                $('#card_likes').empty();
+            }
+        });
     });
-});
 </script>
+
+{% endblock %}

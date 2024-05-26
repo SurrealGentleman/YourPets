@@ -137,11 +137,11 @@ class Filter(forms.ModelForm):
 class ChoicePet(forms.ModelForm):
     pet = forms.ModelChoiceField(queryset=AnimalCard.objects.none(), label='Мои питомцы',
                                  widget=forms.RadioSelect)
-    mutual_likes = forms.BooleanField(label='Взаимные лайки', required=False)
+    mutual_likes = forms.BooleanField(label='Взаимные', required=False)
 
     class Meta:
         model = AnimalCard
-        fields = ['pet']
+        fields = ['pet', 'mutual_likes']
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
