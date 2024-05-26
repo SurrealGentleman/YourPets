@@ -4,6 +4,7 @@ from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
+from django.middleware.csrf import get_token
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
@@ -137,12 +138,10 @@ def pet_cards(request):
             # исключаем из списка карточек список лайкнутых карточек по id
             cards = cards_pets.exclude(id__in=animal_cards_favorite_ids)
             form.fields['pet'].initial = pet_user.pk
-            print('yes')
     else:  # фильтр
         pet_card = AnimalCard.objects.get(pk=request.GET.get('pet'))
         cards = AnimalCard.objects.filter(~Q(owner=request.user), search=True, kind=pet_card.kind)
         form.fields['pet'].initial = request.GET.get('pet')
-        print('yes2')
         if request.GET.getlist('mission'):
             cards_mission = AnimalCard.objects.filter(~Q(owner=request.user), search=True, kind=pet_card.kind,
                                                       mission__in=request.GET.getlist('mission'))
@@ -170,97 +169,38 @@ def pet_cards(request):
         animal_cards_favorite_ids = animal_cards_favorite.values_list('id', flat=True)
         # исключаем из списка карточек список лайкнутых карточек по id
         cards = filtered_animal_card.exclude(id__in=animal_cards_favorite_ids)
-    print(breed_id_list)
     return render(request, 'pet_cards.html', {'form': form, 'cards': cards, 'breed_list': breed_id_list})
-
-
-
-
-    # cards = AnimalCard.objects.filter(~Q(owner=request.user), search=True, kind=pet_user.kind)
-    #
-    # return render(request, 'pet_cards.html', {'form': form, 'cards': cards})
-
-
-
-
-
-
-    #
-    #
-    #
-    # # получаем первого питомца авторизированного пользователя
-    # pet_user = AnimalCard.objects.filter(owner=request.user, search=True).first()
-    #
-    # # если нет питомцев, то рендерим страницу без формы
-    # if pet_user is None:
-    #     return render(request, 'pet_cards.html')
-    #
-    # # форма фильтра
-    # form = Filter(user=request.user)
-    #
-    # # получаем данные из GET запроса
-    # if request.GET.get('pet'):
-    #     pet_user_id = request.GET.get('pet')
-    # else:
-    #     pet_user_id = pet_user.pk
-    # if request.GET.getlist('mission'):
-    #     mission_id_list = request.GET.getlist('mission')
-    #
-    # else:
-    #     pass
-    # gender_id_list = request.GET.getlist('gender')
-    # breed_id_list = request.GET.getlist('breed')
-    #
-    # form.fields['pet'].initial = pet_user_id
-    # form.fields['mission'].initial = mission_id_list
-    # form.fields['gender'].initial = gender_id_list
-    #
-    # # добавляем данные в форму для того, чтобы сохранялся выбор
-    # # получаем питомца по id из запроса
-    # if pet_user_id:
-    #     pet = AnimalCard.objects.get(pk=pet_user_id)
-    # else:
-    #     pet = pet_user
-    #
-    # if len(mission_id_list) == 0 and len(gender_id_list) == 0 and len(breed_id_list) == 0:
-    #     filtered_animal_card = AnimalCard.objects.filter(~Q(owner=request.user), kind=pet.kind)
-    # else:
-    #     # получаем список карточек животных по фильтру без тех кого уже лайкнули
-    #     # все карточки животных других пользователей по фильтру
-    #     animal_card_by_filter = AnimalCard.objects.filter(~Q(owner=request.user), mission__in=mission_id_list,
-    #                                                       gender__in=gender_id_list, breed__in=breed_id_list)
-    #     # все карточки животных которых лайкнул этот пет
-    #     animal_cards_favorite = AnimalCard.objects.filter(animal_to_animal__animal_who=pet)
-    #     # получаем их id
-    #     animal_cards_favorite_ids = animal_cards_favorite.values_list('id', flat=True)
-    #     # исключаем из списка карточек список лайкнутых карточек по id
-    #     filtered_animal_card = animal_card_by_filter.exclude(id__in=animal_cards_favorite_ids)
-    #
-    # if request.method == 'POST':
-    #     card = AnimalCard.objects.get(pk=request.POST.get('card_id'))
-    #     Like.objects.create(animal_who=pet, animal_whom=card).save()
-
-    # return render(request, 'pet_cards.html', {'form': form, 'breed_list': breed_id_list,
-    #                                           'cards': filtered_animal_card})
 
 
 def likes(request):
     form = ChoicePet(user=request.user)
-    cards = AnimalCard.objects.filter()
+    pet_user = AnimalCard.objects.filter(owner=request.user, search=True).first()
+    if pet_user:
+        form.fields['pet'].initial = pet_user.pk
+    if request.method == 'POST':
+        card = AnimalCard.objects.get(pk=request.POST.get('card_id'))
+        if request.GET.get('pet'):
+            pet_user = AnimalCard.objects.get(pk=request.GET.get('pet'))
+        Like.objects.create(animal_who=pet_user, animal_whom=card).save()
     return render(request, 'pet_likes.html', {'form': form})
 
 
 def get_cards_likes(request):
     if request.GET.get('pet_id'):
-        context = dict()
-        # if request.GET.get('mutual_likes'):
-        #     cards_likes_who = Like.objects.filter(animal_who=request.GET.get('pet_id'))
-        #     cards_likes_whom = Like.objects.filter(animal_whom=request.GET.get('pet_id'))
-        #     cards = AnimalCard.objects.filter(id__in=cards_likes.values_list('animal_who', flat=True))
-        #     context['cards'] = cards
-        # else:
-        cards_likes = Like.objects.filter(animal_whom=request.GET.get('pet_id'))
-        cards = AnimalCard.objects.filter(id__in=cards_likes.values_list('animal_who', flat=True))
-        context['cards'] = cards
+
+        cards_likes_whom = Like.objects.filter(animal_whom=request.GET.get('pet_id'))
+        cards_whom = AnimalCard.objects.filter(id__in=cards_likes_whom.values_list('animal_who', flat=True))
+        # кто лайкнул пета
+
+        cards_likes_who = Like.objects.filter(animal_who=request.GET.get('pet_id'))
+        cards_who = AnimalCard.objects.filter(id__in=cards_likes_who.values_list('animal_whom', flat=True))
+        # кого лайкнул пета
+
+        if request.GET.get('mutual_likes') == 'true':
+            cards = cards_who.filter(id__in=cards_whom.values_list('id', flat=True))
+        else:
+            cards = cards_whom.exclude(id__in=cards_who)
+
+        context = {'cards': cards, 'csrf_token': get_token(request), 'mutual': request.GET.get('mutual_likes')}
         cards_html = render_to_string('animal_card_likes.html', context=context)
         return JsonResponse({'cards_html': cards_html})

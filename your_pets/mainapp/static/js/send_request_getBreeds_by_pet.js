@@ -20,8 +20,10 @@ $(document).ready(function() {
 
                             $('input[name="breed"]').each(function() {
                                 var optionId = $(this).val();
-                                if (selectedBreedIds.includes(optionId)) {
-                                    $(this).prop('checked', true);
+                                if (selectedBreedIds != null) {
+                                    if (selectedBreedIds.includes(optionId)) {
+                                        $(this).prop('checked', true);
+                                    }
                                 }
                             });
                         } else {
