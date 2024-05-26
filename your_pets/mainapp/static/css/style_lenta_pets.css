@@ -3,7 +3,9 @@
 }
 
 .filter{
-    min-height: 450px;
+    position: sticky;
+    top: 70px;
+    height: 570px;
     width: 300px;
     border: 2px solid #b0d4b2;
     border-left: 0;
@@ -25,6 +27,11 @@ legend{
     font-weight: bold;
     margin-bottom: 5px;
 }
+
+form:first-child{
+    background-color: white;
+}
+
 
 .filter_choice{
     margin: 5px 0 0 20px;
@@ -56,7 +63,7 @@ form button{
 }
 
 .nav{
-    padding: 5px;
+    padding: 10px;
     font-size: 14pt;
     border-bottom: 2px solid #B0D4B2;
     width: 400px;
@@ -68,13 +75,20 @@ form button{
     border-top: 2px solid #B0D4B2;
     border-left: 2px solid #B0D4B2;
     border-right: 2px solid #B0D4B2;
-    padding: 5px;
+    padding: 10px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    text-decoration: none;
 }
 
 .nav a:last-child{
+    color: #B0D4B2;
     margin-left: 40px;
+}
+
+.nav a:first-child{
+    color: white;
+    background-color: #B0D4B2;
 }
 
 /*Карточки животных*/
@@ -84,6 +98,10 @@ form button{
     display: flex;
     border: 2px solid #B0D4B2;
     border-radius: 20px;
+}
+
+.cards:last-child{
+    margin-bottom: 30px;
 }
 
 .pet_info{

@@ -1,17 +1,45 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+{% block src%}
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-</head>
-<body>
-    Лайки<br><br><br><br><br><br><br>
-    {{form}}
-    <div id="card_likes"></div>
-</body>
-</html>
+    <link rel="stylesheet" href="{% static 'css\style_lenta_pets.css' %}" />
+    <link rel="stylesheet" href="{% static 'css\style_lenta_pets_likes.css' %}" />
+{% endblock %}
+{% block main%}
+    <div class="flex-block">
+        <form method="GET" class="filter">
+    {% for field in form %}
+        {% if field.name == 'pet' %}
+            <div class="block_filter">
+                <legend>Мои питомцы</legend>
+                <div class = "filter_choice" id="id_pet">
+                    {% for choice in field %}
+                        <div>
+                            <label for="{{ choice.id_for_label }}">
+                                {{ choice.tag }}
+                                {{ choice.choice_label }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <button type="submit">Фильтр</button>
+        {% endif %}
+    {% endfor %}
+    </form>
+<!--    Лайки<br><br><br><br><br><br><br>-->
+<!--    {{form}}-->
+    <div class="lenta">
+        <div class="nav">
+            <div class="bottom-line">
+                <a href="{% url 'pet_cards' %}">Лента питомцев</a>
+                <a href="{% url 'likes' %}">Мои лайки</a>
+            </div>
+        </div>
+        <div id="card_likes"></div>
+    </div>
+
+{% endblock %}
 
 <script>
     $(document).ready(function() {

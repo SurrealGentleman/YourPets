@@ -37,13 +37,19 @@
     </header>
         <main>
             {% block main%}
-                <p class="slogan">Начните свое путешествие по миру дружбы и заботы о домашних животных прямо сейчас!</p>
+                <div class="opacity_fon">
+                   <div class="slogan">
+                    <p>СДЕЛАЙ</p><p class="green">ПИТОМЦА</p><p>СЧАСТЛИВЫМ</p>
+                    </div>
+                    <p class="name_list">У нас вы найдёте</p>
+                    <ul class="list">
+                        <li>Индивидуальные советы от ветеринаров</li>
+                        <li>Поиск компании для вашего питомца</li>
+                        <li>Календарь событий</li>
+                    </ul>
+                </div>
                 <img class = "photo_pets" src="{% static 'image\pets.png'%}" alt="Pets photo">
-                <ul class="list">
-                    <li><img src="{% static 'image\advice.png'%}" alt="Icon advice">Индивидуальные советы от ветеринаров</li>
-                    <li><img src="{% static 'image\Search.png'%}" alt="Icon search">Поиск компании для вашего питомца</li>
-                    <li><img src="{% static 'image\calendar.png'%}" alt="Icon calendar">Календарь событий</li>
-                </ul>
+
                 <div class="popUp-bg">
                     <div class="popUp">
                         <p><button class="login">Вход</button> / <button class="register">Регистрация</button></p>

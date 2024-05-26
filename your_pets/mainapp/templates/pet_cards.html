@@ -74,8 +74,8 @@
                     <a href="{% url 'likes' %}">Мои лайки</a>
                 </div>
             </div>
+            {% for card in cards%}
             <div class="cards">
-                {% for card in cards%}
                 <div class="photo">
                    <img src="/media/images/pets/dog_02.jpg">
                 </div>
@@ -128,8 +128,8 @@
                         <input type="hidden" name="card_id" value="4">
                         <button type="submit"><img src="/static/image/like.png"></button>
                     </form>
-                {% endfor %}
-            </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

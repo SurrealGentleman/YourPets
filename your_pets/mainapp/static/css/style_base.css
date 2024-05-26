@@ -15,10 +15,9 @@
 body{
     height: 100%;
     font-family: "Comfortaa";
-    background-image: url('../image/feet2.png');
+    background-image: url('../image/bones.svg');
     background-repeat: no-repeat;
-    background-position: right 30px top 100px ;
-    background-size: 450px;
+    background-size: cover;
 }
 
 header a{
@@ -196,42 +195,50 @@ form textarea{
 main .photo_pets{
     position: absolute;
     right: 80px;
-    top: 80px;
-    width:300px;
+    top: 40px;
+    width:350px;
     display: inline-block;
     margin-top: 100px;
 }
 
-main .photo_feet{
-    position: absolute;
-    width: 450px;
-    right: 25px;
-    bottom: 45px;
-    z-index: -2;
+.slogan{
+    font-size: 34pt;
+    width: 650px;
+    margin: 0 0 10px 50px;
+    display: inline-block;
 }
 
-.slogan{
-    font-size: 22pt;
-    font-weight: bold;
-    width: 850px;
-    margin: 60px 0 10px 50px;
-    display: inline-block;
+.slogan .green{
+    color: #b0d4b2;
+}
+
+.opacity_fon{
+    margin: 60px 0 0 40px;
+    background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.8) 40%, transparent);
+    width: fit-content;
+    height: 410px;
+    padding-bottom: 20px;
 }
 
 main .list{
     font-size: 16pt;
-    margin: 30px 0 0 70px;
+    margin: 0 0 0 50px;
     list-style-type: none;
 }
 main .list li{
-    margin-bottom: 30px;
+    background-color: #b0d4b2;
+    width: fit-content;
+    padding: 10px 20px;
+    border-radius: 30px;
     display:flex;
     align-items:center;
+    color: white;
+    margin-bottom: 10px;
 }
-
-main li img{
-    width: 60px;
-    margin-right:10px;
+.name_list{
+    margin: 10px 0 10px 50px;
+    font-weight: bold;
+    font-size: 26px;
 }
 
 .footer {
