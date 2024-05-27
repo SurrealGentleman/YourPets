@@ -48,11 +48,11 @@
                 {{card.comment}}
             </div>
         </div>
-            <form method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="card_id" value="{{card.pk}}">
-                <button type="submit"><img src="/static/image/like.png"></button>
-                <button type="submit"><img src="/static/image/like.png"></button>
+            <form>
+                <div class="delete_or_like">
+                    <button class="button">Удалить</button>
+                    <button class="button">Взаимный лайк</button>
+                </div>
             </form>
         </div>
 {% endfor %}
