@@ -101,3 +101,12 @@ class GenderAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Gender, GenderAdmin)
+
+
+class FavoritesAdmin(admin.ModelAdmin):
+    list_display = ('pet', 'advice')
+    list_display_links = ('pet',)
+    list_filter = ('pet',)
+
+
+admin.site.register(Favorites, FavoritesAdmin)
