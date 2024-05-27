@@ -204,3 +204,20 @@ def get_cards_likes(request):
         context = {'cards': cards, 'csrf_token': get_token(request), 'mutual': request.GET.get('mutual_likes')}
         cards_html = render_to_string('animal_card_likes.html', context=context)
         return JsonResponse({'cards_html': cards_html})
+
+
+def dislike(request):
+    if request.method == 'GET':
+        who_pet = AnimalCard.objects.get(pk=request.GET.get('card_id'))
+        whom_pet = AnimalCard.objects.get(pk=request.GET.get('petId'))
+        Like.objects.get(animal_who=who_pet, animal_whom=whom_pet).delete()
+        return JsonResponse({'success': True})
+
+
+def like(request):
+    if request.method == 'GET':
+        who_pet = AnimalCard.objects.get(pk=request.GET.get('petId'))
+        whom_pet = AnimalCard.objects.get(pk=request.GET.get('card_id'))
+        new_record = Like(animal_who=who_pet, animal_whom=whom_pet)
+        new_record.save()
+        return JsonResponse({'success': True})

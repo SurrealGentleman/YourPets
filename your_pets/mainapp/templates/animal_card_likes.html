@@ -48,11 +48,9 @@
                 {{card.comment}}
             </div>
         </div>
-            <form>
-                <div class="delete_or_like">
-                    <button class="button">Удалить</button>
-                    <button class="button">Взаимный лайк</button>
-                </div>
-            </form>
+        <div class="delete_or_like">
+            <button onclick="request_like_or_dislike(name='dislike_btn', card_id={{card.pk}})" class="button">Удалить</button>
+            <button onclick="request_like_or_dislike(name='like_btn', card_id={{card.pk}})" class="button">Взаимный лайк</button>
         </div>
+    </div>
 {% endfor %}
