@@ -1,20 +1,31 @@
-document.addEventListener('DOMContentLoaded', function() {
-    var radioButtons = document.querySelectorAll('input[type="radio"]');
-    console.log(radioButtons)
-    if (radioButtons.length > 0) {
-        radioButtons[0].checked = true;
-        console.log(radioButtons[0].checked)
-    }
-    radioButtons.forEach(function(radioButton) {
-        radioButton.addEventListener('change', function() {
-            radioButtons.forEach(function(rb, i) {
-                var label = rb.nextElementSibling;
-                if (rb.checked) {
-                    label.classList.remove('darkening');
-                } else if (i !== radioButtons.length - 1) {
-                    label.classList.add('darkening');
-                }
-            });
-        });
+$(document).ready(function() {
+    var $petInputs = $('input[name="id_pets"]');
+    var $petLabels = $petInputs.next('label');
+
+    // Устанавливаем последний input как выбранный по умолчанию
+    $petInputs.last().prop('checked', true);
+
+    // Добавляем класс darkening всем label, кроме последнего
+    $petLabels.not(':last').addClass('darkening');
+
+    // Обработчик события change для input[name=id_pets]
+    $petInputs.on('change', function() {
+        var $currentInput = $(this);
+        var $currentLabel = $currentInput.next('label');
+
+        // Если текущий input является последним
+        if ($currentInput.is($petInputs.last())) {
+            // Убираем класс darkening у текущего label
+            $currentLabel.removeClass('darkening');
+
+            // Добавляем класс darkening всем другим label
+            $petLabels.not($currentLabel).addClass('darkening');
+        } else {
+            // Убираем класс darkening у текущего label
+            $currentLabel.removeClass('darkening');
+
+            // Добавляем класс darkening всем другим label, кроме последнего
+            $petLabels.not($currentLabel).not(':last').addClass('darkening');
+        }
     });
 });
