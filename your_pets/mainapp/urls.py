@@ -18,6 +18,8 @@ urlpatterns = [
     path('pet_cards/', pet_cards, name='pet_cards'),
     path('pet_cards/likes', likes, name='likes'),
 
+    path('dislike/', dislike, name='dislike'),
+    path('like/', like, name='like'),
     # path('add_update_pet/', add_update_pet, name='add_update_pet'),
     # path('change_password/', user_password_change, name='change_password'),
     # path('login/', login_or_register, name='login'),
