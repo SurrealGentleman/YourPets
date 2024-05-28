@@ -1,0 +1,18 @@
+{% load static %}
+{% for card in cards %}
+    <h3>{{card.name}}</h3>
+    <ul>
+        <li>{{card.kind}}</li>
+        {% if card.breed %}<li>{{card.breed}}</li>{% endif %}
+        {% if card.color %}<li>{{card.color}}</li>{% endif %}
+        {% if card.gender %}<li>{{card.gender}}</li>{% endif %}
+        {% if card.lower_age and card.upper_age %}<li>{{card.lower_age}}-{{card.upper_age}} лет</li>{% endif %}
+    </ul>
+    <p>{{card.content}}</p>
+    <button id="{{card.pk}}" onclick="favorite_advice_card('{{card.pk}}')" class="card_not_favorite"></button>
+    {% for fav_card in favorites %}
+        {% if card.pk == fav_card.advice.pk %}
+            <script>add_favorite_class('{{card.pk}}')</script>
+        {% endif %}
+    {% endfor %}
+{% endfor %}

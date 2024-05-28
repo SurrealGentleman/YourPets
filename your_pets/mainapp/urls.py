@@ -20,6 +20,16 @@ urlpatterns = [
 
     path('dislike/', dislike, name='dislike'),
     path('like/', like, name='like'),
+
+    path('advice/', advice, name='advice'),
+    path('advice/favorites', favorites, name='favorites'),
+
+    path('get_cards_advice/', get_cards_advice, name='get_cards_advice'),
+    path('get_cards_favorites_advice/', get_cards_favorites_advice, name='get_cards_favorites_advice'),
+
+    path('favorite_advice_card/', favorite_advice_card, name='favorite_advice_card'),
+    path('not_favorite_advice_card/', not_favorite_advice_card, name='not_favorite_advice_card'),
+
     # path('add_update_pet/', add_update_pet, name='add_update_pet'),
     # path('change_password/', user_password_change, name='change_password'),
     # path('login/', login_or_register, name='login'),

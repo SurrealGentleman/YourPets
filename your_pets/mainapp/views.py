@@ -221,3 +221,78 @@ def like(request):
         new_record = Like(animal_who=who_pet, animal_whom=whom_pet)
         new_record.save()
         return JsonResponse({'success': True})
+
+
+def advice(request):
+    form = ChoicePet(user=request.user)
+    pet_user = AnimalCard.objects.filter(owner=request.user, search=True).first()
+    if pet_user:
+        form.fields['pet'].initial = pet_user.pk
+    return render(request, 'advice.html', {'form': form})
+
+
+def get_cards_advice(request):
+    if request.GET.get('pet_id'):
+        user_pet = AnimalCard.objects.get(id=request.GET.get('pet_id'))
+        cards = AdviceCard.objects.filter(kind=user_pet.kind)
+        favorites_cards = Favorites.objects.filter(pet=user_pet)
+        context = {'cards': cards, 'favorites': favorites_cards}
+        cards_html = render_to_string('advice_card.html', context=context)
+        return JsonResponse({'cards_html': cards_html})
+
+
+def favorites(request):
+    form = ChoicePet(user=request.user)
+    pet_user = AnimalCard.objects.filter(owner=request.user, search=True).first()
+    if pet_user:
+        form.fields['pet'].initial = pet_user.pk
+    return render(request, 'favorites.html', {'form': form})
+
+
+def get_cards_favorites_advice(request):
+    if request.GET.get('pet_id'):
+        user_pet = AnimalCard.objects.get(id=request.GET.get('pet_id'))
+        favorites_cards_id = Favorites.objects.filter(pet=user_pet).values_list('advice', flat=True)
+        cards = AdviceCard.objects.filter(pk__in=favorites_cards_id)
+        favorites_cards = Favorites.objects.filter(pet=user_pet)
+        context = {'cards': cards, 'favorites': favorites_cards}
+        cards_html = render_to_string('advice_card.html', context=context)
+        return JsonResponse({'cards_html': cards_html})
+
+
+def favorite_advice_card(request):
+    if request.GET.get('petId') and request.GET.get('advice_card_id'):
+        user_pet = AnimalCard.objects.get(id=request.GET.get('petId'))
+        advice_card = AdviceCard.objects.get(id=request.GET.get('advice_card_id'))
+        new_record = Favorites(pet=user_pet, advice=advice_card)
+        new_record.save()
+        return JsonResponse({'success': True})
+
+
+def not_favorite_advice_card(request):
+    if request.GET.get('petId') and request.GET.get('advice_card_id'):
+        user_pet = AnimalCard.objects.get(id=request.GET.get('petId'))
+        advice_card = AdviceCard.objects.get(id=request.GET.get('advice_card_id'))
+        Favorites.objects.get(pet=user_pet, advice=advice_card).delete()
+        return JsonResponse({'success': True})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

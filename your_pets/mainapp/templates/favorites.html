@@ -1,0 +1,25 @@
+{% load static %}
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="{% static 'js\send_request_print_favorites_advice.js'%}"></script>
+<script src="{% static 'js\request_favorite_advice_card.js'%}"></script>
+<style>
+    .card_favorite{
+        background: none;
+        background-image: url("{% static 'image/flag_yes.png' %}");
+        background-repeat: no-repeat;
+        border: none;
+        width: 50px;
+        height: 50px
+    }
+    .card_not_favorite{
+        background: none;
+        background-image: url("{% static 'image/flag_no.png' %}");
+        background-repeat: no-repeat;
+        border: none;
+        width: 50px;
+        height: 50px;
+    }
+</style>
+{{form.pet.label}}
+{{form.pet}}
+<div id="card_advice"></div>
