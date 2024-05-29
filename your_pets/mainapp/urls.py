@@ -30,6 +30,7 @@ urlpatterns = [
     path('favorite_advice_card/', favorite_advice_card, name='favorite_advice_card'),
     path('not_favorite_advice_card/', not_favorite_advice_card, name='not_favorite_advice_card'),
 
+    path('exposition/', exposition, name='exposition'),
     # path('add_update_pet/', add_update_pet, name='add_update_pet'),
     # path('change_password/', user_password_change, name='change_password'),
     # path('login/', login_or_register, name='login'),

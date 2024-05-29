@@ -13,10 +13,12 @@
     </script>
     {% endif %}
     <link rel="stylesheet" href="{% static 'css\style_lenta_pets.css' %}" />
-
 {% endblock %}
 {% block main%}
     <div class="flex-block">
+    {% for field in form %}
+    {% if field.name == 'pet'%}
+    {% if field|length != 0 %}
         <form method="GET" class="filter">
     {% for field in form %}
         {% if field.name == 'pet' %}
@@ -70,7 +72,7 @@
                 <button type="submit">Фильтр</button>
             </div>
         {% endif %}
-    {% endfor %}
+    {% endfor %}{% endif %}{% endif %}{% endfor %}
 
         </form>
         <div class="lenta">
@@ -80,10 +82,15 @@
                     <a href="{% url 'likes' %}">Мои лайки</a>
                 </div>
             </div>
+            {% if cards|length == 0 %}
+            <div class="error">
+                По выбранным фильтрам животные не найдены
+            </div>
+            {% endif %}
             {% for card in cards%}
             <div class="cards">
                 <div class="photo">
-                   <img src="/media/images/pets/dog_02.jpg">
+                   <img src="/media/{{card.photo}}">
                 </div>
                 <div class="pet_info">
                     <div class="pet_name">

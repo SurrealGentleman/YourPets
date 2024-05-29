@@ -276,7 +276,8 @@ def not_favorite_advice_card(request):
         Favorites.objects.get(pet=user_pet, advice=advice_card).delete()
         return JsonResponse({'success': True})
 
-
+def exposition(request):
+    return render(request, 'exposition.html')
 
 
 

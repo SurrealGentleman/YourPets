@@ -4,13 +4,13 @@
 
 .filter{
     position: sticky;
-    top: 70px;
+    top: 90px;
     height: 570px;
     width: 300px;
     border: 2px solid #b0d4b2;
     border-left: 0;
     border-radius: 0 20px 20px 0;
-    margin: 70px 0 30px 0;
+    margin: 100px 0 30px 0;
 }
 
 .block_filter{
@@ -31,7 +31,6 @@ legend{
 form:first-child{
     background-color: white;
 }
-
 
 .filter_choice{
     margin: 5px 0 0 20px;
@@ -84,6 +83,7 @@ form button{
 .nav a:last-child{
     color: #B0D4B2;
     margin-left: 40px;
+    background-color: white;
 }
 
 .nav a:first-child{
@@ -92,7 +92,17 @@ form button{
 }
 
 /*Карточки животных*/
+.error{
+    border: 2px solid #B0D4B2;
+    background-color: white;
+    text-align: center;
+    width: 500px;
+    padding: 30px;
+    margin-top: 30px;
+    border-radius: 20px;
+}
 .cards{
+    max-height: 390px;
     margin-top: 30px;
     background-color: white;
     display: flex;
