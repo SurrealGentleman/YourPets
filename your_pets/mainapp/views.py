@@ -279,6 +279,12 @@ def not_favorite_advice_card(request):
 def exposition(request):
     return render(request, 'exposition.html')
 
+def calendar_current(request):
+    return render(request, 'calendar_current.html')
+
+def calendar_last(request):
+    return render(request, 'calendar_last.html')
+
 
 
 

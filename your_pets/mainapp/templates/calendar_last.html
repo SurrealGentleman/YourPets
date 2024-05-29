@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% block src %}
+    <link rel="stylesheet" href="{% static 'css\style_calendar.css' %}" />
+    <link rel="stylesheet" href="{% static 'css\style_calendar_last.css' %}" />
+{% endblock %}
+{% block main %}
+<div class="flex-block">
+    <div class="lenta">
+       <div class="nav">
+            <div class="bottom-line">
+                <a href="{% url 'calendar_current' %}">Актуальные</a>
+                <a href="{% url 'calendar_last' %}">Прошедшие</a>
+            </div>
+       </div>
+    </div>
+    <div class="events">
+        <div class="one_event">
+            <p class="name">Название события</p>
+            <ul class="tags">
+                <li>Дата</li>
+                <li>Питомец</li>
+            </ul>
+            <p>описание описание описание описание описание описание описание описание описание описание описание описание описание</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

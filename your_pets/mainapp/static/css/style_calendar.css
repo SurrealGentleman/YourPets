@@ -1,0 +1,134 @@
+.flex-block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lenta{
+    width: 950px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+}
+
+.nav{
+    padding: 10px;
+    font-size: 14pt;
+    border-bottom: 2px solid #B0D4B2;
+    width: 400px;
+    display: flex;
+    justify-content: center;
+}
+
+.nav a{
+    border-top: 2px solid #B0D4B2;
+    border-left: 2px solid #B0D4B2;
+    border-right: 2px solid #B0D4B2;
+    padding: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-decoration: none;
+}
+
+.nav a:last-child{
+    color: #B0D4B2;
+    margin-left: 40px;
+    background-color: white;
+}
+
+.nav a:first-child{
+    color: white;
+    background-color: #B0D4B2;
+}
+
+.add_event{
+    margin: 30px 0 20px 20px;
+    padding: 10px 0 20px 0;
+    background-color: white;
+    border: 2px solid #B0D4B2;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    align-items: center;
+}
+
+.add_event p{
+    font-size: 14pt;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.add_event label{
+    display: block;
+    font-size: 10pt;
+}
+
+input, select{
+    font-family: "Comfortaa";
+    margin: 5px 0 5px 0;
+    padding-left:7px;
+    height: 30px;
+    width: 300px;
+    font-size: 10pt;
+    border: 1px solid #B0D4B2;
+    border-radius: 10px;
+}
+
+select{
+    width: 310px;
+}
+
+.button_event{
+    text-align: center;
+    font-family: "Comfortaa";
+    background: #B0D4B2;
+    color: white;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 150px;
+    height: 25px;
+}
+
+.events{
+    display: flex;
+    flex-direction: column;
+}
+
+.one_event{
+    margin: 30px 0 20px 20px;
+    background-color: white;
+    border: 2px solid #B0D4B2;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    width: 700px;
+}
+
+.one_event .name{
+    font-weight: bold;
+    font-size: 14pt;
+}
+
+.tags {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    font-size: 8pt;
+}
+
+.tags li {
+    display: inline;
+    padding: 4px 10px;
+    border-radius: 5px;
+    margin: 12px 4px;
+    background-color: #DCDCDC;
+    color: #696969;
+}
+
+.tags li:first-child{
+    margin-left: 0px;
+}
