@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% block src %}
+    <link rel="stylesheet" href="{% static 'css\style_calendar.css' %}" />
+{% endblock %}
+{% block main %}
+<div class="flex-block">
+    <div class="lenta">
+       <div class="nav">
+            <div class="bottom-line">
+                <a href="{% url 'calendar_current' %}">Актуальные</a>
+                <a href="{% url 'calendar_last' %}">Прошедшие</a>
+            </div>
+       </div>
+    </div>
+    <form method="GET" class="add_event">
+        <p>Новое событие</p>
+        {% csrf_token %}
+        <div class="block_event">
+            <label>Название</label>
+            <input type="text">
+        </div>
+        <div class="block_event">
+            <label>Питомец</label>
+            <select>
+                <option>Булка</option>
+                <option>Огурец</option>
+                <option>Молоко</option>
+            </select>
+        </div>
+        <div class="block_event">
+            <label>Дата события</label>
+            <input type="date">
+        </div>
+        <div class="block_event">
+            <label>Описание</label>
+            <textarea></textarea>
+        </div>
+        <button class='button_event' type="submit">Добавить</button>
+    </form>
+    <div class="events">
+        <div class="one_event">
+            <p class="name">Название события</p>
+            <ul class="tags">
+                <li>Дата</li>
+                <li>Питомец</li>
+            </ul>
+            <p>описание описание описание описание описание описание описание описание описание описание описание описание описание</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

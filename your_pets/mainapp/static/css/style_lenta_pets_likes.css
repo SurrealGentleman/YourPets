@@ -1,13 +1,23 @@
 .filter{
-    height: 200px;
+    height: 250px;
 }
 
-.block_filter{
+.form{
+    width: 150px;
+}
+
+.form .button{
+    width: 150px !important;
+    background-color: #B0D4B2 !important;
+    z-index: 1;
     border: 0;
+    height: 30px;
+    border-radius: 20px;
+    color:white;
 }
 
-form button{
-    margin-left: 30px;
+.button:last-child{
+    margin-top: 20px;
 }
 
 .nav a:first-child{
@@ -19,3 +29,40 @@ form button{
     background-color: #B0D4B2;
     color: white;
 }
+
+.delete_or_like{
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+button .img_2{
+    width: 40px !important;
+}
+
+button .img_1{
+    margin-left: 20px;
+    width: 30px !important;
+}
+
+.photo-container {
+  position: relative;
+}
+
+.connect_user {
+  position: relative;
+  top: -40px;
+  left: 150px;
+  width: 200px;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.connect_user p{
+    margin-bottom: 5px;
+}
+
+

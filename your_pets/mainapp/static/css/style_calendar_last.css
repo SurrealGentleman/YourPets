@@ -1,0 +1,13 @@
+.nav a:first-child{
+    background-color: white;
+    color: #B0D4B2;
+}
+
+.nav a:last-child{
+    background-color: #B0D4B2;
+    color: white;
+}
+
+.one_event{
+    background-color: #EEEEEE;
+}

@@ -1,8 +1,16 @@
 {% load static %}
 {% for card in cards %}
     <div class="cards">
-        <div class="photo">
-           <img src="/media/images/pets/dog_02.jpg">
+        <div class="photo_container">
+            <div class="photo">
+               <img src="/media/images/pets/dog_02.jpg">
+            </div>
+            {% if mutual == true %}
+                <div class="connect_user">
+                    <p><b>Контактные данные</b></p>
+                    {{card.owner.connect}}
+                </div>
+            {% endif %}
         </div>
         <div class="pet_info">
             <div class="pet_name">
@@ -47,10 +55,13 @@
             <div class="block_comment">
                 {{card.comment}}
             </div>
+
         </div>
-        <div class="delete_or_like">
-            <button onclick="request_like_or_dislike(name='dislike_btn', card_id={{card.pk}})" class="button">Удалить</button>
-            <button onclick="request_like_or_dislike(name='like_btn', card_id={{card.pk}})" class="button">Взаимный лайк</button>
+        <div class="form">
+            <div class="delete_or_like">
+                <button onclick="request_like_or_dislike(name='dislike_btn', card_id={{card.pk}})" class="button">Удалить</button>
+                <button onclick="request_like_or_dislike(name='like_btn', card_id={{card.pk}})" class="button">Взаимный лайк</button>
+            </div>
         </div>
     </div>
 {% endfor %}

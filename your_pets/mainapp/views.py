@@ -276,7 +276,14 @@ def not_favorite_advice_card(request):
         Favorites.objects.get(pet=user_pet, advice=advice_card).delete()
         return JsonResponse({'success': True})
 
+def exposition(request):
+    return render(request, 'exposition.html')
 
+def calendar_current(request):
+    return render(request, 'calendar_current.html')
+
+def calendar_last(request):
+    return render(request, 'calendar_last.html')
 
 
 

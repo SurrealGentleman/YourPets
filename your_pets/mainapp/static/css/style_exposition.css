@@ -1,0 +1,55 @@
+.flex-block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.exposition{
+    margin: 30px 0 20px 20px;
+    background-color: white;
+    border: 2px solid #B0D4B2;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    width: 900px;
+}
+
+.photo{
+    height: 133px;
+}
+
+.photo img{
+    width: 200px;
+    border-top-left-radius: 18px;
+    border-bottom-left-radius: 18px;
+}
+
+.info_icon {
+    width: 30px;
+    margin-right: 10px;
+}
+
+.exposition_info{
+    padding: 20px 20px 0 20px;
+}
+
+.header{
+    font-size: 18pt;
+    font-weight: bold;
+}
+
+.grey_text{
+    color: #989898;
+    padding-top: 5px;
+}
+
+.data_location{
+    display: flex;
+    gap: 280px;
+    margin-top: 25px;
+}
+
+.data_location div{
+    display: flex;
+    align-items: flex-end;
+}
