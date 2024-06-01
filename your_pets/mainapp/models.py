@@ -155,27 +155,14 @@ class Reviews(models.Model):
         verbose_name_plural = "Отзывы"
 
 
-class Event(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Пользователь', null=True, blank=True)
-    name = models.CharField(max_length=100, verbose_name='Наименование события', unique=True)
-    color = models.CharField(verbose_name='Цвет', unique=True, max_length=30)
-
-    def __str__(self):
-        return f"{self.name}"
-
-    class Meta:
-        verbose_name = "Событие"
-        verbose_name_plural = "Событие"
-
-
 class Calendar(models.Model):
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, verbose_name='Событие')
+    name_event = models.CharField(max_length=200, verbose_name='Событие')
     date = models.DateTimeField(verbose_name='Дата')
     pet = models.ForeignKey(AnimalCard, on_delete=models.CASCADE, verbose_name='Питомец')
-    comment = models.CharField(max_length=100, verbose_name='Комментарий', null=True, blank=True)
-
+    comment = models.CharField(max_length=500, verbose_name='Комментарий', null=True, blank=True)
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Владелец')
     def __str__(self):
-        return f"{self.event}"
+        return f"{self.name_event}"
 
     class Meta:
         verbose_name = "Календарь"

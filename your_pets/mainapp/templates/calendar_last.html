@@ -15,14 +15,16 @@
        </div>
     </div>
     <div class="events">
+        {% for event in calendar_events %}
         <div class="one_event">
-            <p class="name">Название события</p>
+            <p class="name">{{event.name_event}}</p>
             <ul class="tags">
-                <li>Дата</li>
-                <li>Питомец</li>
+                <li>{{event.date}}</li>
+                <li>{{event.pet}}</li>
             </ul>
-            <p>описание описание описание описание описание описание описание описание описание описание описание описание описание</p>
+            <p>{{event.comment}}</p>
         </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

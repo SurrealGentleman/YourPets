@@ -30,7 +30,7 @@ urlpatterns = [
     path('favorite_advice_card/', favorite_advice_card, name='favorite_advice_card'),
     path('not_favorite_advice_card/', not_favorite_advice_card, name='not_favorite_advice_card'),
 
-    path('exposition/', exposition, name='exposition'),
+    path('exhibitions/', exhibitions, name='exhibitions'),
 
     path('calendar/', calendar_current, name='calendar_current'),
     path('calendar/last', calendar_last, name='calendar_last'),

@@ -59,18 +59,10 @@ class AdviceCardAdmin(admin.ModelAdmin):
 admin.site.register(AdviceCard, AdviceCardAdmin)
 
 
-class EventAdmin(admin.ModelAdmin):
-    list_display = ('user', 'name', 'color')
-    list_display_links = ('name',)
-
-
-admin.site.register(Event, EventAdmin)
-
-
 class CalendarAdmin(admin.ModelAdmin):
-    list_display = ('event', 'date', 'pet', 'comment')
+    list_display = ('name_event', 'date', 'pet', 'comment')
     list_display_links = ('date', 'comment')
-    list_filter = ('pet', 'event')
+    list_filter = ('pet', 'name_event')
 
 
 admin.site.register(Calendar, CalendarAdmin)

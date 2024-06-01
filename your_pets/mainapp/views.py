@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.contrib import messages
 from django.contrib.auth import logout, update_session_auth_hash, login
 from django.contrib.auth.views import LoginView, PasswordChangeView
@@ -12,6 +14,7 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, ListView, UpdateView, FormView, DeleteView
 from .forms import *
+from .parser import parse_exhibitions
 
 
 def login_or_register(request):
@@ -200,7 +203,6 @@ def get_cards_likes(request):
             cards = cards_who.filter(id__in=cards_whom.values_list('id', flat=True))
         else:
             cards = cards_whom.exclude(id__in=cards_who)
-
         context = {'cards': cards, 'csrf_token': get_token(request), 'mutual': request.GET.get('mutual_likes')}
         cards_html = render_to_string('animal_card_likes.html', context=context)
         return JsonResponse({'cards_html': cards_html})
@@ -211,6 +213,7 @@ def dislike(request):
         who_pet = AnimalCard.objects.get(pk=request.GET.get('card_id'))
         whom_pet = AnimalCard.objects.get(pk=request.GET.get('petId'))
         Like.objects.get(animal_who=who_pet, animal_whom=whom_pet).delete()
+        Like.objects.get(animal_who=whom_pet, animal_whom=who_pet).delete()
         return JsonResponse({'success': True})
 
 
@@ -276,14 +279,25 @@ def not_favorite_advice_card(request):
         Favorites.objects.get(pet=user_pet, advice=advice_card).delete()
         return JsonResponse({'success': True})
 
-def exposition(request):
-    return render(request, 'exposition.html')
+
+def exhibitions(request):
+    list_events = parse_exhibitions()
+    return render(request, 'exhibitions.html', {'list_events': list_events})
+
 
 def calendar_current(request):
-    return render(request, 'calendar_current.html')
+    if request.method == 'POST':
+        form = CalendarForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+    form = CalendarForm(user=request.user)
+    calendar_events = Calendar.objects.filter(owner=request.user.pk, date__gte=date.today()).order_by('date')
+    return render(request, 'calendar_current.html', {'form': form, 'calendar_events': calendar_events})
+
 
 def calendar_last(request):
-    return render(request, 'calendar_last.html')
+    calendar_events = Calendar.objects.filter(owner=request.user.pk, date__lt=date.today()).order_by('-date')
+    return render(request, 'calendar_last.html', {'calendar_events': calendar_events})
 
 
 

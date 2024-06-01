@@ -5,7 +5,7 @@
             <div class="photo">
                <img src="/media/images/pets/dog_02.jpg">
             </div>
-            {% if mutual == true %}
+            {% if mutual == 'true' %}
                 <div class="connect_user">
                     <p><b>Контактные данные</b></p>
                     {{card.owner.connect}}
@@ -60,7 +60,9 @@
         <div class="form">
             <div class="delete_or_like">
                 <button onclick="request_like_or_dislike(name='dislike_btn', card_id={{card.pk}})" class="button">Удалить</button>
+                {% if mutual != 'true' %}
                 <button onclick="request_like_or_dislike(name='like_btn', card_id={{card.pk}})" class="button">Взаимный лайк</button>
+                {% endif %}
             </div>
         </div>
     </div>

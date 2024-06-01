@@ -151,3 +151,31 @@ class ChoicePet(forms.ModelForm):
             self.fields['pet'].queryset = AnimalCard.objects.filter(owner=self.user, search=True)
         else:
             self.fields['pet'].queryset = AnimalCard.objects.none()
+
+
+class CalendarForm(forms.ModelForm):
+    name_event = forms.CharField(label='Название', max_length=200)
+    date = forms.DateField(label='Дата события', widget=forms.DateInput(attrs={'type': 'date'}))
+    pet = forms.ModelChoiceField(queryset=AnimalCard.objects.none(), label='Питомец')
+    comment = forms.CharField(label='Описание', max_length=500, widget=forms.Textarea())
+
+    class Meta:
+        model = Calendar
+        fields = ['name_event', 'date', 'pet', 'comment']
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+        if self.user:
+            self.fields['pet'].queryset = AnimalCard.objects.filter(owner=self.user)
+        else:
+            self.fields['pet'].queryset = AnimalCard.objects.none()
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.owner = self.user
+        if commit:
+            instance.save()
+        return instance
+
