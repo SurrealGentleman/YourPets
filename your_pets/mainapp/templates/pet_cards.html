@@ -3,7 +3,7 @@
 {% block title%}Лента{% endblock %}
 {% block src%}
     <script src="{% static 'js\send_request_getBreeds_by_pet.js' %}"></script>
-    {% if selectedBreedIds != None %}
+    {% if breed_list != None %}
     <script type="text/javascript">
         var selectedBreedIds = {{ breed_list|safe }};
     </script>
@@ -69,7 +69,7 @@
                 <div class = "filter_choice" id="id_breed">
                     <div>{{ field }}</div>
                 </div>
-                <button type="submit">Фильтр</button>
+                <button type="submit">Применить</button>
             </div>
         {% endif %}
     {% endfor %}{% endif %}{% endif %}{% endfor %}
@@ -82,11 +82,15 @@
                     <a href="{% url 'likes' %}">Мои лайки</a>
                 </div>
             </div>
-            {% if cards|length == 0 %}
+            {% if form.pet|length == 0 %}
+            <div class="error">
+                Вы не добавили животных для поиска
+            </div>
+            {% elif cards|length == 0 %}
             <div class="error">
                 По выбранным фильтрам животные не найдены
             </div>
-            {% endif %}
+            {% else %}
             {% for card in cards%}
             <div class="cards">
                 <div class="photo">
@@ -143,6 +147,7 @@
                     </form>
                 </div>
             {% endfor %}
+            {% endif %}
         </div>
     </div>
 {% endblock %}

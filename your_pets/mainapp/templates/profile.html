@@ -3,12 +3,11 @@
 {% block title %}Профиль{% endblock %}
 {% block src %}
     <link rel="stylesheet" href="{% static 'css\style_profile.css' %}" />
+    <script src="{% static 'js\confirm_delete_user.js'%}"></script>
     <script src="{% static 'js\first_radio_checked.js'%}"></script>
     <script src="{% static 'js\send_request_on_add_update.js' %}"></script>
     <script src="{% static 'js\open_popup.js'%}"></script>
-    <script src="{% static 'js\timeout_redirect.js'%}"></script>
     <script src="{% static 'js\add_photo.js'%}"></script>
-    <script src="{% static 'js\confirm_delete_user.js'%}"></script>
 {% endblock %}
 {% block main%}
     <div class="flex_block">
@@ -26,7 +25,7 @@
                     <a href="javascript:void(0)" class="change_password" onclick="return showModal()">Удалить</a>
 <!--                    javascript:void(0) - Это выражение возвращается как «undefined», что означает, что не будет производиться редирект на другую страницу-->
                 </div>
-                <div class="overlay">
+                <div id="overlay" class="overlay">
                    <div id="confirmModal" style="display:none;">
                        <p>Вы уверены, что хотите продолжить?</p>
                        <div>
@@ -37,9 +36,6 @@
                 </div>
 
                 <button type="submit" class="button_change" name="profile_change">Изменить</button>
-                {% for message in messages %}
-                  <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                {% endfor %}
             </form>
         </div>
         <div class="user_pets">

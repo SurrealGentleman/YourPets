@@ -9,6 +9,7 @@
 {% endblock %}
 {% block main%}
     <div class="flex-block">
+        {% if form.pet|length != 0 %}
         <form method="GET" class="filter">
         {% for field in form %}
             {% if field.name == 'pet' %}
@@ -42,6 +43,7 @@
             {% endif %}
         {% endfor %}
         </form>
+        {% endif %}
 
         <div class="lenta">
             <div class="nav">
@@ -50,6 +52,11 @@
                     <a href="{% url 'likes' %}">Мои лайки</a>
                 </div>
             </div>
+            {% if form.pet|length == 0 %}
+            <div class="error">
+                Вы не добавили животных для поиска
+            </div>
+            {% endif %}
             <div id="card_likes"></div>
         </div>
     </div>

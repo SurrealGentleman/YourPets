@@ -1,6 +1,7 @@
 $(document).ready(function(){
     // Включаем или отключаем отображение модального окна.
     const confirmModal = document.getElementById('confirmModal');
+    const overlay = document.getElementById('overlay');
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
 
@@ -14,5 +15,5 @@ function showModal() {
     $('html').addClass('no-scroll');
     $('.overlay').fadeIn(500);
 }
-function hideModal() { confirmModal.style.display = 'none'; }
+function hideModal() { overlay.style.display = 'none'; }
 

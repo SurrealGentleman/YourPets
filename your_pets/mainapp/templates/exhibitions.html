@@ -12,10 +12,10 @@
                    <img src="{{event.img}}">
                 </div>
                 <div class="exposition_info">
-                    <p class="header">{{event.title}}</p>
+                    <a href="{{event.link}}" target="_blank"><p class="header">{{event.title}}</p></a>
                     <p class="grey_text">{{event.desc}}</p>
                     <div class="data_location">
-                       <div>
+                        <div>
                             <img class="info_icon" src="/static/image/birth2.png">
                             <p>{{event.date}}</p>
                         </div>
@@ -28,6 +28,5 @@
             </div>
             {%endfor%}
         </div>
-    </div>
     </div>
 {% endblock %}

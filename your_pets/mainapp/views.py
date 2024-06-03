@@ -37,7 +37,8 @@ def login_or_register(request):
                 user = form_register.save(commit=False)
                 user.set_password(form_register.cleaned_data['password1'])
                 user.save()
-                return redirect('main_page')
+                login(request, user)
+                return redirect('profile')
     return render(request, 'base.html', {'form_login': form_login, 'form_register': form_register})
 
 
@@ -125,6 +126,7 @@ def pet_cards(request):
     form = Filter(user=request.user)
     pet_user = AnimalCard.objects.filter(owner=request.user, search=True).first()
     breed_id_list = None
+    cards = list()
     if request.method == 'POST':
         card = AnimalCard.objects.get(pk=request.POST.get('card_id'))
         if request.GET.get('pet'):

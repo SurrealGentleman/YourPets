@@ -16,12 +16,13 @@
 
 .photo{
     height: 133px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
 }
 
 .photo img{
-    width: 200px;
-    border-top-left-radius: 18px;
-    border-bottom-left-radius: 18px;
+    width: 100px;
 }
 
 .info_icon {
@@ -31,6 +32,7 @@
 
 .exposition_info{
     padding: 20px 20px 0 20px;
+    width: 100%;
 }
 
 .header{
@@ -45,11 +47,16 @@
 
 .data_location{
     display: flex;
-    gap: 280px;
     margin-top: 25px;
 }
 
 .data_location div{
     display: flex;
     align-items: flex-end;
+    width: 50%;
+}
+
+a{
+    text-decoration: none;
+    color: black;
 }

@@ -157,7 +157,7 @@ class CalendarForm(forms.ModelForm):
     name_event = forms.CharField(label='Название', max_length=200)
     date = forms.DateField(label='Дата события', widget=forms.DateInput(attrs={'type': 'date'}))
     pet = forms.ModelChoiceField(queryset=AnimalCard.objects.none(), label='Питомец')
-    comment = forms.CharField(label='Описание', max_length=500, widget=forms.Textarea())
+    comment = forms.CharField(label='Описание', max_length=500, required=False, widget=forms.Textarea())
 
     class Meta:
         model = Calendar

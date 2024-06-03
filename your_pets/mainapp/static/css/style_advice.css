@@ -14,11 +14,13 @@ form{
     display: flex;
     flex-direction: column;
     padding: 20px;
+    width: 900px;
 }
 
 .name{
     font-size: 24px;
     font-weight: bold;
+    padding-right: 50px;
 }
 
 .tags {
@@ -64,7 +66,8 @@ p:last-child{
 
 .card_not_favorite, .card_favorite{
     position: absolute;
-    right: 30px;
+    margin-top: -23px;
+    margin-left: 850px;
 }
 
 .cards_advice p{

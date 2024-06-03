@@ -14,17 +14,30 @@
             </div>
        </div>
     </div>
-    <div class="events">
-        {% for event in calendar_events %}
-        <div class="one_event">
-            <p class="name">{{event.name_event}}</p>
-            <ul class="tags">
-                <li>{{event.date}}</li>
-                <li>{{event.pet}}</li>
-            </ul>
-            <p>{{event.comment}}</p>
+    {% if calendar_events.count == 0 %}
+        <div class="events">
+            <div class="one_event">
+                <p class="name">Здесь будут отображаться ваши прошедшие события</p>
+                <ul class="tags">
+                    <li>{{event.date}}</li>
+                    <li>{{event.pet}}</li>
+                </ul>
+                <p>{{event.comment}}</p>
+            </div>
         </div>
-        {% endfor %}
-    </div>
+    {% else %}
+        <div class="events">
+            {% for event in calendar_events %}
+            <div class="one_event">
+                <p class="name">{{event.name_event}}</p>
+                <ul class="tags">
+                    <li>{{event.date}}</li>
+                    <li>{{event.pet}}</li>
+                </ul>
+                <p>{{event.comment}}</p>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 </div>
 {% endblock %}
